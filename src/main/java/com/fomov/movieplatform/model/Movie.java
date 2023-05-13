@@ -20,7 +20,7 @@ public class Movie {
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
-    private CinemaDetails cinemaDetails;
+    private MovieDetails movieDetails;
 
     @ManyToOne(fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.MERGE,
@@ -43,9 +43,9 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(String name, CinemaDetails cinemaDetails, Genre genre, List<Cinema> cinemas, List<Event> events) {
+    public Movie(String name, MovieDetails movieDetails, Genre genre, List<Cinema> cinemas, List<Event> events) {
         this.name = name;
-        this.cinemaDetails = cinemaDetails;
+        this.movieDetails = movieDetails;
         this.genre = genre;
         this.cinemas = cinemas;
         this.events = events;
@@ -63,12 +63,12 @@ public class Movie {
         this.name = name;
     }
 
-    public CinemaDetails getCinemaDetails() {
-        return cinemaDetails;
+    public MovieDetails getMovieDetails() {
+        return movieDetails;
     }
 
-    public void setCinemaDetails(CinemaDetails cinemaDetails) {
-        this.cinemaDetails = cinemaDetails;
+    public void setMovieDetails(MovieDetails movieDetails) {
+        this.movieDetails = movieDetails;
     }
 
     public Genre getGenre() {
@@ -100,11 +100,11 @@ public class Movie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return Objects.equals(name, movie.name) && Objects.equals(cinemaDetails, movie.cinemaDetails) && Objects.equals(genre, movie.genre) && Objects.equals(cinemas, movie.cinemas) && Objects.equals(events, movie.events);
+        return Objects.equals(name, movie.name) && Objects.equals(movieDetails, movie.movieDetails) && Objects.equals(genre, movie.genre) && Objects.equals(cinemas, movie.cinemas) && Objects.equals(events, movie.events);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cinemaDetails, genre, cinemas, events);
+        return Objects.hash(name, movieDetails, genre, cinemas, events);
     }
 }
