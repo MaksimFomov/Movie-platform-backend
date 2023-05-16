@@ -24,7 +24,7 @@ public class MovieDetails {
     private String producer;
 
     @Column(name = "duration", nullable = false)
-    private String duration;
+    private Integer duration;
 
     @Column(name = "age_limit", nullable = false)
     private Integer ageLimit;
@@ -38,7 +38,7 @@ public class MovieDetails {
     public MovieDetails() {
     }
 
-    public MovieDetails(String description, String country, Integer year, String producer, String duration, Integer ageLimit, Movie movie) {
+    public MovieDetails(String description, String country, Integer year, String producer, Integer duration, Integer ageLimit, Movie movie) {
         this.description = description;
         this.country = country;
         this.year = year;
@@ -84,11 +84,11 @@ public class MovieDetails {
         this.producer = producer;
     }
 
-    public String getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 

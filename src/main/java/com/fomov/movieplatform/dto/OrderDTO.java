@@ -6,6 +6,7 @@ public class OrderDTO {
     private EventDTO event;
     private Integer place;
 
-    public OrderDTO() {
-    }
+    // constructors, getters and setters
 }
+
+

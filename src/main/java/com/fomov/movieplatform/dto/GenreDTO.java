@@ -5,8 +5,10 @@ import java.util.List;
 public class GenreDTO {
     private Long id;
     private String name;
-    List<MovieDTO> movies;
+    private List<MovieDTO> movies;
 
-    public GenreDTO() {
-    }
+    // constructors, getters and setters
 }
+
+
+

@@ -29,7 +29,7 @@ public class Event {
     private Double price;
 
     @Column(name = "number_of_tickets", nullable = false)
-    private String numberOfTickets;
+    private Integer numberOfTickets;
 
     @OneToMany(mappedBy = "event",
             fetch = FetchType.LAZY,
@@ -40,7 +40,7 @@ public class Event {
     public Event() {
     }
 
-    public Event(Movie movie, Cinema cinema, Double price, String numberOfTickets, List<Order> orders) {
+    public Event(Movie movie, Cinema cinema, Double price, Integer numberOfTickets, List<Order> orders) {
         this.movie = movie;
         this.cinema = cinema;
         this.price = price;
@@ -76,11 +76,11 @@ public class Event {
         this.price = price;
     }
 
-    public String getNumberOfTickets() {
+    public Integer getNumberOfTickets() {
         return numberOfTickets;
     }
 
-    public void setNumberOfTickets(String numberOfTickets) {
+    public void setNumberOfTickets(Integer numberOfTickets) {
         this.numberOfTickets = numberOfTickets;
     }
 

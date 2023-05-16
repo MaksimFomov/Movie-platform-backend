@@ -1,12 +1,18 @@
 package com.fomov.movieplatform.dto;
 
+import java.util.List;
+import java.util.Set;
+
 public class CinemaDTO {
     private Long id;
     private String name;
-    private CinemaDetailsDTO cinemaDetails;
-    private MovieDTO movie;
-    private EventDTO event;
+    private String address;
+    private int capacity;
+    private List<MovieDTO> movies;
+    private List<EventDTO> events;
 
-    public CinemaDTO() {
-    }
+    // constructors, getters and setters
 }
+
+
+

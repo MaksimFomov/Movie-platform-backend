@@ -8,10 +8,11 @@ public class EventDTO {
     private Long id;
     private MovieDTO movie;
     private CinemaDTO cinema;
-    private Double price;
-    private String numberOfTickets;
+    private double price;
+    private int numberOfTickets;
     private List<OrderDTO> orders;
 
-    public EventDTO() {
-    }
+    // constructors, getters and setters
 }
+
+
