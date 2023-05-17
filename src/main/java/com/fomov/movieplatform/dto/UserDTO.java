@@ -7,16 +7,16 @@ public class UserDTO {
     private Long id;
     private String email;
     private String password;
-    private List<OrderDTO> orders;
+    private List<OrderDTO> orderDTOs;
 
     public UserDTO() {
     }
 
-    public UserDTO(Long id, String email, String password, List<OrderDTO> orders) {
+    public UserDTO(Long id, String email, String password, List<OrderDTO> orderDTOs) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.orders = orders;
+        this.orderDTOs = orderDTOs;
     }
 
     public Long getId() {
@@ -43,12 +43,12 @@ public class UserDTO {
         this.password = password;
     }
 
-    public List<OrderDTO> getOrders() {
-        return orders;
+    public List<OrderDTO> getOrderDTOs() {
+        return orderDTOs;
     }
 
-    public void setOrders(List<OrderDTO> orders) {
-        this.orders = orders;
+    public void setOrderDTOs(List<OrderDTO> orderDTOs) {
+        this.orderDTOs = orderDTOs;
     }
 
     @Override
@@ -56,12 +56,12 @@ public class UserDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserDTO userDTO = (UserDTO) o;
-        return Objects.equals(id, userDTO.id) && Objects.equals(email, userDTO.email) && Objects.equals(password, userDTO.password) && Objects.equals(orders, userDTO.orders);
+        return Objects.equals(id, userDTO.id) && Objects.equals(email, userDTO.email) && Objects.equals(password, userDTO.password) && Objects.equals(orderDTOs, userDTO.orderDTOs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, password, orders);
+        return Objects.hash(id, email, password, orderDTOs);
     }
 }
 

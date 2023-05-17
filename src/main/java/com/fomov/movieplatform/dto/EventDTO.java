@@ -7,22 +7,22 @@ import java.util.Objects;
 
 public class EventDTO {
     private Long id;
-    private MovieDTO movie;
-    private CinemaDTO cinema;
+    private MovieDTO movieDTO;
+    private CinemaDTO cinemaDTO;
     private double price;
     private int numberOfTickets;
-    private List<OrderDTO> orders;
+    private List<OrderDTO> orderDTOs;
 
     public EventDTO() {
     }
 
-    public EventDTO(Long id, MovieDTO movie, CinemaDTO cinema, double price, int numberOfTickets, List<OrderDTO> orders) {
+    public EventDTO(Long id, MovieDTO movieDTO, CinemaDTO cinemaDTO, double price, int numberOfTickets, List<OrderDTO> orderDTOs) {
         this.id = id;
-        this.movie = movie;
-        this.cinema = cinema;
+        this.movieDTO = movieDTO;
+        this.cinemaDTO = cinemaDTO;
         this.price = price;
         this.numberOfTickets = numberOfTickets;
-        this.orders = orders;
+        this.orderDTOs = orderDTOs;
     }
 
     public Long getId() {
@@ -33,20 +33,20 @@ public class EventDTO {
         this.id = id;
     }
 
-    public MovieDTO getMovie() {
-        return movie;
+    public MovieDTO getMovieDTO() {
+        return movieDTO;
     }
 
-    public void setMovie(MovieDTO movie) {
-        this.movie = movie;
+    public void setMovieDTO(MovieDTO movieDTO) {
+        this.movieDTO = movieDTO;
     }
 
-    public CinemaDTO getCinema() {
-        return cinema;
+    public CinemaDTO getCinemaDTO() {
+        return cinemaDTO;
     }
 
-    public void setCinema(CinemaDTO cinema) {
-        this.cinema = cinema;
+    public void setCinemaDTO(CinemaDTO cinemaDTO) {
+        this.cinemaDTO = cinemaDTO;
     }
 
     public double getPrice() {
@@ -65,12 +65,12 @@ public class EventDTO {
         this.numberOfTickets = numberOfTickets;
     }
 
-    public List<OrderDTO> getOrders() {
-        return orders;
+    public List<OrderDTO> getOrderDTOs() {
+        return orderDTOs;
     }
 
-    public void setOrders(List<OrderDTO> orders) {
-        this.orders = orders;
+    public void setOrderDTOs(List<OrderDTO> orderDTOs) {
+        this.orderDTOs = orderDTOs;
     }
 
     @Override
@@ -78,12 +78,12 @@ public class EventDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EventDTO eventDTO = (EventDTO) o;
-        return Double.compare(eventDTO.price, price) == 0 && numberOfTickets == eventDTO.numberOfTickets && Objects.equals(id, eventDTO.id) && Objects.equals(movie, eventDTO.movie) && Objects.equals(cinema, eventDTO.cinema) && Objects.equals(orders, eventDTO.orders);
+        return Double.compare(eventDTO.price, price) == 0 && numberOfTickets == eventDTO.numberOfTickets && Objects.equals(id, eventDTO.id) && Objects.equals(movieDTO, eventDTO.movieDTO) && Objects.equals(cinemaDTO, eventDTO.cinemaDTO) && Objects.equals(orderDTOs, eventDTO.orderDTOs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, movie, cinema, price, numberOfTickets, orders);
+        return Objects.hash(id, movieDTO, cinemaDTO, price, numberOfTickets, orderDTOs);
     }
 }
 

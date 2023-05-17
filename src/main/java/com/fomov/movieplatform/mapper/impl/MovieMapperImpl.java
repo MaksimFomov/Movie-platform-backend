@@ -1,6 +1,9 @@
 package com.fomov.movieplatform.mapper.impl;
 
 import com.fomov.movieplatform.dto.MovieDTO;
+import com.fomov.movieplatform.mapper.CinemaMapper;
+import com.fomov.movieplatform.mapper.EventMapper;
+import com.fomov.movieplatform.mapper.GenreMapper;
 import com.fomov.movieplatform.mapper.MovieMapper;
 import com.fomov.movieplatform.model.Movie;
 import com.fomov.movieplatform.model.MovieDetails;
@@ -13,9 +16,13 @@ import java.util.stream.Collectors;
 public class MovieMapperImpl implements MovieMapper {
 
     private final GenreMapper genreMapper;
+    private final CinemaMapper cinemaMapper;
+    private final EventMapper eventMapper;
 
-    public MovieMapperImpl(GenreMapper genreMapper) {
+    public MovieMapperImpl(GenreMapper genreMapper, CinemaMapper cinemaMapper, EventMapper eventMapper) {
         this.genreMapper = genreMapper;
+        this.cinemaMapper = cinemaMapper;
+        this.eventMapper = eventMapper;
     }
 
     @Override
@@ -27,19 +34,15 @@ public class MovieMapperImpl implements MovieMapper {
         MovieDTO movieDTO = new MovieDTO();
         movieDTO.setId(movie.getId());
         movieDTO.setName(movie.getName());
-
-        if (movie.getMovieDetail() != null) {
-            movieDTO.setDescription(movie.getMovieDetail().getDescription());
-            movieDTO.setCountry(movie.getMovieDetail().getCountry());
-            movieDTO.setYear(movie.getMovieDetail().getYear());
-            movieDTO.setProducer(movie.getMovieDetail().getProducer());
-            movieDTO.setDuration(movie.getMovieDetail().getDuration());
-            movieDTO.setAgeLimit(movie.getMovieDetail().getAgeLimit());
-        }
-
-        if (movie.getGenre() != null) {
-            movieDTO.setGenre(genreMapper.genreToGenreDTO(movie.getGenre()));
-        }
+        movieDTO.setDescription(movie.getMovieDetails().getDescription());
+        movieDTO.setCountry(movie.getMovieDetails().getCountry());
+        movieDTO.setYear(movie.getMovieDetails().getYear());
+        movieDTO.setProducer(movie.getMovieDetails().getProducer());
+        movieDTO.setDuration(movie.getMovieDetails().getDuration());
+        movieDTO.setAgeLimit(movie.getMovieDetails().getAgeLimit());
+        movieDTO.setGenreDTO(genreMapper.genreToGenreDTO(movie.getGenre()));
+        movieDTO.setCinemaDTOs(cinemaMapper.cinemasToCinemaDTOs(movie.getCinemas()));
+        movieDTO.setEventDTOs(eventMapper.eventsToEventDTOs(movie.getEvents()));
 
         return movieDTO;
     }
@@ -54,28 +57,24 @@ public class MovieMapperImpl implements MovieMapper {
         movie.setId(movieDTO.getId());
         movie.setName(movieDTO.getName());
 
-        MovieDetails movieDetail = new MovieDetails();
-        movieDetail.setDescription(movieDTO.getDescription());
-        movieDetail.setCountry(movieDTO.getCountry());
-        movieDetail.setYear(movieDTO.getYear());
-        movieDetail.setProducer(movieDTO.getProducer());
-        movieDetail.setDuration(movieDTO.getDuration());
-        movieDetail.setAgeLimit(movieDTO.getAgeLimit());
-        movie.setMovieDetails(movieDetail);
+        MovieDetails movieDetails = new MovieDetails();
+        movieDetails.setDescription(movieDTO.getDescription());
+        movieDetails.setCountry(movieDTO.getCountry());
+        movieDetails.setYear(movieDTO.getYear());
+        movieDetails.setProducer(movieDTO.getProducer());
+        movieDetails.setDuration(movieDTO.getDuration());
+        movieDetails.setAgeLimit(movieDTO.getAgeLimit());
 
-        if (movieDTO.getGenre() != null) {
-            movie.setGenre(genreMapper.genreDTOToGenre(movieDTO.getGenre()));
-        }
+        movie.setMovieDetails(movieDetails);
+        movie.setGenre(genreMapper.genreDTOToGenre(movieDTO.getGenreDTO()));
+        movie.setCinemas(cinemaMapper.cinemaDTOsToCinemas(movieDTO.getCinemaDTOs()));
+        movie.setEvents(eventMapper.eventDTOsToEvents(movieDTO.getEventDTOs()));
 
         return movie;
     }
 
     @Override
     public List<MovieDTO> moviesToMovieDTOs(List<Movie> movies) {
-        if (movies == null) {
-            return null;
-        }
-
         return movies.stream()
                 .map(this::movieToMovieDTO)
                 .collect(Collectors.toList());
@@ -83,13 +82,10 @@ public class MovieMapperImpl implements MovieMapper {
 
     @Override
     public List<Movie> movieDTOsToMovies(List<MovieDTO> movieDTOs) {
-        if (movieDTOs == null) {
-            return null;
-        }
-
         return movieDTOs.stream()
                 .map(this::movieDTOToMovie)
                 .collect(Collectors.toList());
     }
 }
+
 

@@ -2,7 +2,6 @@ package com.fomov.movieplatform.dto;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public class MovieDTO {
     private Long id;
@@ -13,14 +12,14 @@ public class MovieDTO {
     private String producer;
     private int duration;
     private int ageLimit;
-    private GenreDTO genre;
-    private List<CinemaDTO> cinemas;
-    private List<EventDTO> events;
+    private GenreDTO genreDTO;
+    private List<CinemaDTO> cinemaDTOs;
+    private List<EventDTO> eventDTOs;
 
     public MovieDTO() {
     }
 
-    public MovieDTO(Long id, String name, String description, String country, int year, String producer, int duration, int ageLimit, GenreDTO genre, List<CinemaDTO> cinemas, List<EventDTO> events) {
+    public MovieDTO(Long id, String name, String description, String country, int year, String producer, int duration, int ageLimit, GenreDTO genreDTO, List<CinemaDTO> cinemaDTOs, List<EventDTO> eventDTOs) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -29,9 +28,9 @@ public class MovieDTO {
         this.producer = producer;
         this.duration = duration;
         this.ageLimit = ageLimit;
-        this.genre = genre;
-        this.cinemas = cinemas;
-        this.events = events;
+        this.genreDTO = genreDTO;
+        this.cinemaDTOs = cinemaDTOs;
+        this.eventDTOs = eventDTOs;
     }
 
     public Long getId() {
@@ -98,28 +97,28 @@ public class MovieDTO {
         this.ageLimit = ageLimit;
     }
 
-    public GenreDTO getGenre() {
-        return genre;
+    public GenreDTO getGenreDTO() {
+        return genreDTO;
     }
 
-    public void setGenre(GenreDTO genre) {
-        this.genre = genre;
+    public void setGenreDTO(GenreDTO genreDTO) {
+        this.genreDTO = genreDTO;
     }
 
-    public List<CinemaDTO> getCinemas() {
-        return cinemas;
+    public List<CinemaDTO> getCinemaDTOs() {
+        return cinemaDTOs;
     }
 
-    public void setCinemas(List<CinemaDTO> cinemas) {
-        this.cinemas = cinemas;
+    public void setCinemaDTOs(List<CinemaDTO> cinemaDTOs) {
+        this.cinemaDTOs = cinemaDTOs;
     }
 
-    public List<EventDTO> getEvents() {
-        return events;
+    public List<EventDTO> getEventDTOs() {
+        return eventDTOs;
     }
 
-    public void setEvents(List<EventDTO> events) {
-        this.events = events;
+    public void setEventDTOs(List<EventDTO> eventDTOs) {
+        this.eventDTOs = eventDTOs;
     }
 
     @Override
@@ -127,12 +126,12 @@ public class MovieDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MovieDTO movieDTO = (MovieDTO) o;
-        return year == movieDTO.year && duration == movieDTO.duration && ageLimit == movieDTO.ageLimit && Objects.equals(id, movieDTO.id) && Objects.equals(name, movieDTO.name) && Objects.equals(description, movieDTO.description) && Objects.equals(country, movieDTO.country) && Objects.equals(producer, movieDTO.producer) && Objects.equals(genre, movieDTO.genre) && Objects.equals(cinemas, movieDTO.cinemas) && Objects.equals(events, movieDTO.events);
+        return year == movieDTO.year && duration == movieDTO.duration && ageLimit == movieDTO.ageLimit && Objects.equals(id, movieDTO.id) && Objects.equals(name, movieDTO.name) && Objects.equals(description, movieDTO.description) && Objects.equals(country, movieDTO.country) && Objects.equals(producer, movieDTO.producer) && Objects.equals(genreDTO, movieDTO.genreDTO) && Objects.equals(cinemaDTOs, movieDTO.cinemaDTOs) && Objects.equals(eventDTOs, movieDTO.eventDTOs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, country, year, producer, duration, ageLimit, genre, cinemas, events);
+        return Objects.hash(id, name, description, country, year, producer, duration, ageLimit, genreDTO, cinemaDTOs, eventDTOs);
     }
 }
 

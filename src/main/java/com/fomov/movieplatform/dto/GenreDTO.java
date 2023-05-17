@@ -6,15 +6,15 @@ import java.util.Objects;
 public class GenreDTO {
     private Long id;
     private String name;
-    private List<MovieDTO> movies;
+    private List<MovieDTO> movieDTOs;
 
     public GenreDTO() {
     }
 
-    public GenreDTO(Long id, String name, List<MovieDTO> movies) {
+    public GenreDTO(Long id, String name, List<MovieDTO> movieDTOs) {
         this.id = id;
         this.name = name;
-        this.movies = movies;
+        this.movieDTOs = movieDTOs;
     }
 
     public Long getId() {
@@ -33,12 +33,12 @@ public class GenreDTO {
         this.name = name;
     }
 
-    public List<MovieDTO> getMovies() {
-        return movies;
+    public List<MovieDTO> getMovieDTOs() {
+        return movieDTOs;
     }
 
-    public void setMovies(List<MovieDTO> movies) {
-        this.movies = movies;
+    public void setMovieDTOs(List<MovieDTO> movieDTOs) {
+        this.movieDTOs = movieDTOs;
     }
 
     @Override
@@ -46,12 +46,12 @@ public class GenreDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GenreDTO genreDTO = (GenreDTO) o;
-        return Objects.equals(id, genreDTO.id) && Objects.equals(name, genreDTO.name) && Objects.equals(movies, genreDTO.movies);
+        return Objects.equals(id, genreDTO.id) && Objects.equals(name, genreDTO.name) && Objects.equals(movieDTOs, genreDTO.movieDTOs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, movies);
+        return Objects.hash(id, name, movieDTOs);
     }
 }
 

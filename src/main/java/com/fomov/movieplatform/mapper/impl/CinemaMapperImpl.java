@@ -2,11 +2,14 @@ package com.fomov.movieplatform.mapper.impl;
 
 import com.fomov.movieplatform.dto.CinemaDTO;
 import com.fomov.movieplatform.mapper.CinemaMapper;
+import com.fomov.movieplatform.mapper.EventMapper;
 import com.fomov.movieplatform.mapper.MovieMapper;
 import com.fomov.movieplatform.model.Cinema;
 import com.fomov.movieplatform.model.CinemaDetails;
-import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CinemaMapperImpl implements CinemaMapper {
@@ -28,19 +31,10 @@ public class CinemaMapperImpl implements CinemaMapper {
         CinemaDTO cinemaDTO = new CinemaDTO();
         cinemaDTO.setId(cinema.getId());
         cinemaDTO.setName(cinema.getName());
-
-        if (cinema.getCinemaDetails() != null) {
-            cinemaDTO.setAddress(cinema.getCinemaDetails().getAddress());
-            cinemaDTO.setCapacity(cinema.getCinemaDetails().getCapacity());
-        }
-
-        if (cinema.getMovies() != null) {
-            cinemaDTO.setMovies(movieMapper.moviesToMovieDTOs(cinema.getMovies()));
-        }
-
-        if (cinema.getEvents() != null) {
-            cinemaDTO.setEvents(eventMapper.eventsToEventDTOs(cinema.getEvents()));
-        }
+        cinemaDTO.setAddress(cinema.getCinemaDetails().getAddress());
+        cinemaDTO.setCapacity(cinema.getCinemaDetails().getCapacity());
+        cinemaDTO.setMovieDTOs(movieMapper.moviesToMovieDTOs(cinema.getMovies()));
+        cinemaDTO.setEventDTOs(eventMapper.eventsToEventDTOs(cinema.getEvents()));
 
         return cinemaDTO;
     }
@@ -58,25 +52,16 @@ public class CinemaMapperImpl implements CinemaMapper {
         CinemaDetails cinemaDetails = new CinemaDetails();
         cinemaDetails.setAddress(cinemaDTO.getAddress());
         cinemaDetails.setCapacity(cinemaDTO.getCapacity());
+
         cinema.setCinemaDetails(cinemaDetails);
-
-        if (cinemaDTO.getMovies() != null) {
-            cinema.setMovies(movieMapper.movieDTOsToMovies(cinemaDTO.getMovies()));
-        }
-
-        if (cinemaDTO.getEvents() != null) {
-            cinema.setEvents(eventMapper.eventDTOsToEvents(cinemaDTO.getEvents()));
-        }
+        cinema.setMovies(movieMapper.movieDTOsToMovies(cinemaDTO.getMovieDTOs()));
+        cinema.setEvents(eventMapper.eventDTOsToEvents(cinemaDTO.getEventDTOs()));
 
         return cinema;
     }
 
     @Override
     public List<CinemaDTO> cinemasToCinemaDTOs(List<Cinema> cinemas) {
-        if (cinemas == null) {
-            return null;
-        }
-
         return cinemas.stream()
                 .map(this::cinemaToCinemaDTO)
                 .collect(Collectors.toList());
@@ -84,13 +69,10 @@ public class CinemaMapperImpl implements CinemaMapper {
 
     @Override
     public List<Cinema> cinemaDTOsToCinemas(List<CinemaDTO> cinemaDTOs) {
-        if (cinemaDTOs == null) {
-            return null;
-        }
-
         return cinemaDTOs.stream()
                 .map(this::cinemaDTOToCinema)
                 .collect(Collectors.toList());
     }
 }
+
 

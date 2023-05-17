@@ -9,19 +9,19 @@ public class CinemaDTO {
     private String name;
     private String address;
     private int capacity;
-    private List<MovieDTO> movies;
-    private List<EventDTO> events;
+    private List<MovieDTO> movieDTOs;
+    private List<EventDTO> eventDTOs;
 
     public CinemaDTO() {
     }
 
-    public CinemaDTO(Long id, String name, String address, int capacity, List<MovieDTO> movies, List<EventDTO> events) {
+    public CinemaDTO(Long id, String name, String address, int capacity, List<MovieDTO> movieDTOs, List<EventDTO> eventDTOs) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.capacity = capacity;
-        this.movies = movies;
-        this.events = events;
+        this.movieDTOs = movieDTOs;
+        this.eventDTOs = eventDTOs;
     }
 
     public Long getId() {
@@ -56,20 +56,20 @@ public class CinemaDTO {
         this.capacity = capacity;
     }
 
-    public List<MovieDTO> getMovies() {
-        return movies;
+    public List<MovieDTO> getMovieDTOs() {
+        return movieDTOs;
     }
 
-    public void setMovies(List<MovieDTO> movies) {
-        this.movies = movies;
+    public void setMovieDTOs(List<MovieDTO> movieDTOs) {
+        this.movieDTOs = movieDTOs;
     }
 
-    public List<EventDTO> getEvents() {
-        return events;
+    public List<EventDTO> getEventDTOs() {
+        return eventDTOs;
     }
 
-    public void setEvents(List<EventDTO> events) {
-        this.events = events;
+    public void setEventDTOs(List<EventDTO> eventDTOs) {
+        this.eventDTOs = eventDTOs;
     }
 
     @Override
@@ -77,12 +77,12 @@ public class CinemaDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CinemaDTO cinemaDTO = (CinemaDTO) o;
-        return capacity == cinemaDTO.capacity && Objects.equals(id, cinemaDTO.id) && Objects.equals(name, cinemaDTO.name) && Objects.equals(address, cinemaDTO.address) && Objects.equals(movies, cinemaDTO.movies) && Objects.equals(events, cinemaDTO.events);
+        return capacity == cinemaDTO.capacity && Objects.equals(id, cinemaDTO.id) && Objects.equals(name, cinemaDTO.name) && Objects.equals(address, cinemaDTO.address) && Objects.equals(movieDTOs, cinemaDTO.movieDTOs) && Objects.equals(eventDTOs, cinemaDTO.eventDTOs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, address, capacity, movies, events);
+        return Objects.hash(id, name, address, capacity, movieDTOs, eventDTOs);
     }
 }
 

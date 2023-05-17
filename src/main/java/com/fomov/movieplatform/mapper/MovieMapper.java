@@ -10,8 +10,9 @@ import java.util.List;
 
 @Mapper
 public interface MovieMapper {
-    MovieMapper INSTANCE = Mappers.getMapper(MovieMapper.class);
-
+    @Mapping(source = "genre", target = "genreDTO")
+    @Mapping(source = "cinemas", target = "cinemaDTOs")
+    @Mapping(source = "events", target = "eventDTOs")
     @Mapping(source = "movieDetail.description", target = "description")
     @Mapping(source = "movieDetail.country", target = "country")
     @Mapping(source = "movieDetail.year", target = "year")
@@ -20,6 +21,9 @@ public interface MovieMapper {
     @Mapping(source = "movieDetail.ageLimit", target = "ageLimit")
     MovieDTO movieToMovieDTO(Movie movie);
 
+    @Mapping(source = "genreDTO", target = "genre")
+    @Mapping(source = "cinemaDTOs", target = "cinemas")
+    @Mapping(source = "eventDTOs", target = "events")
     @Mapping(source = "description", target = "movieDetail.description")
     @Mapping(source = "country", target = "movieDetail.country")
     @Mapping(source = "year", target = "movieDetail.year")
