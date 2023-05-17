@@ -25,13 +25,18 @@ public class Genre {
     public Genre() {
     }
 
-    public Genre(String name, List<Movie> movies) {
+    public Genre(Long id, String name, List<Movie> movies) {
+        this.id = id;
         this.name = name;
         this.movies = movies;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -55,11 +60,11 @@ public class Genre {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Genre genre = (Genre) o;
-        return Objects.equals(name, genre.name) && Objects.equals(movies, genre.movies);
+        return Objects.equals(id, genre.id) && Objects.equals(name, genre.name) && Objects.equals(movies, genre.movies);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, movies);
+        return Objects.hash(id, name, movies);
     }
 }

@@ -26,7 +26,8 @@ public class CinemaDetails {
     public CinemaDetails() {
     }
 
-    public CinemaDetails(String address, Integer capacity, Cinema cinema) {
+    public CinemaDetails(Long id, String address, Integer capacity, Cinema cinema) {
+        this.id = id;
         this.address = address;
         this.capacity = capacity;
         this.cinema = cinema;
@@ -34,6 +35,10 @@ public class CinemaDetails {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getAddress() {
@@ -65,11 +70,11 @@ public class CinemaDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CinemaDetails that = (CinemaDetails) o;
-        return Objects.equals(address, that.address) && Objects.equals(capacity, that.capacity) && Objects.equals(cinema, that.cinema);
+        return Objects.equals(id, that.id) && Objects.equals(address, that.address) && Objects.equals(capacity, that.capacity) && Objects.equals(cinema, that.cinema);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(address, capacity, cinema);
+        return Objects.hash(id, address, capacity, cinema);
     }
 }

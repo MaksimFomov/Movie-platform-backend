@@ -40,7 +40,8 @@ public class Event {
     public Event() {
     }
 
-    public Event(Movie movie, Cinema cinema, Double price, Integer numberOfTickets, List<Order> orders) {
+    public Event(Long id, Movie movie, Cinema cinema, Double price, Integer numberOfTickets, List<Order> orders) {
+        this.id = id;
         this.movie = movie;
         this.cinema = cinema;
         this.price = price;
@@ -50,6 +51,10 @@ public class Event {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Movie getMovie() {
@@ -97,11 +102,11 @@ public class Event {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Event event = (Event) o;
-        return Objects.equals(movie, event.movie) && Objects.equals(cinema, event.cinema) && Objects.equals(price, event.price) && Objects.equals(numberOfTickets, event.numberOfTickets) && Objects.equals(orders, event.orders);
+        return Objects.equals(id, event.id) && Objects.equals(movie, event.movie) && Objects.equals(cinema, event.cinema) && Objects.equals(price, event.price) && Objects.equals(numberOfTickets, event.numberOfTickets) && Objects.equals(orders, event.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(movie, cinema, price, numberOfTickets, orders);
+        return Objects.hash(id, movie, cinema, price, numberOfTickets, orders);
     }
 }

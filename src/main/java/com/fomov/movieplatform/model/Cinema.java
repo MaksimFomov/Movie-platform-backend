@@ -40,7 +40,8 @@ public class Cinema {
     public Cinema() {
     }
 
-    public Cinema(String name, CinemaDetails cinemaDetails, List<Movie> movies, List<Event> events) {
+    public Cinema(Long id, String name, CinemaDetails cinemaDetails, List<Movie> movies, List<Event> events) {
+        this.id = id;
         this.name = name;
         this.cinemaDetails = cinemaDetails;
         this.movies = movies;
@@ -92,11 +93,11 @@ public class Cinema {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cinema cinema = (Cinema) o;
-        return Objects.equals(name, cinema.name) && Objects.equals(cinemaDetails, cinema.cinemaDetails) && Objects.equals(movies, cinema.movies) && Objects.equals(events, cinema.events);
+        return Objects.equals(id, cinema.id) && Objects.equals(name, cinema.name) && Objects.equals(cinemaDetails, cinema.cinemaDetails) && Objects.equals(movies, cinema.movies) && Objects.equals(events, cinema.events);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cinemaDetails, movies, events);
+        return Objects.hash(id, name, cinemaDetails, movies, events);
     }
 }

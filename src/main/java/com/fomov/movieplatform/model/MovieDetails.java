@@ -38,7 +38,8 @@ public class MovieDetails {
     public MovieDetails() {
     }
 
-    public MovieDetails(String description, String country, Integer year, String producer, Integer duration, Integer ageLimit, Movie movie) {
+    public MovieDetails(Long id, String description, String country, Integer year, String producer, Integer duration, Integer ageLimit, Movie movie) {
+        this.id = id;
         this.description = description;
         this.country = country;
         this.year = year;
@@ -50,6 +51,10 @@ public class MovieDetails {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getDescription() {
@@ -113,11 +118,11 @@ public class MovieDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MovieDetails that = (MovieDetails) o;
-        return Objects.equals(description, that.description) && Objects.equals(country, that.country) && Objects.equals(year, that.year) && Objects.equals(producer, that.producer) && Objects.equals(duration, that.duration) && Objects.equals(ageLimit, that.ageLimit) && Objects.equals(movie, that.movie);
+        return Objects.equals(id, that.id) && Objects.equals(description, that.description) && Objects.equals(country, that.country) && Objects.equals(year, that.year) && Objects.equals(producer, that.producer) && Objects.equals(duration, that.duration) && Objects.equals(ageLimit, that.ageLimit) && Objects.equals(movie, that.movie);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(description, country, year, producer, duration, ageLimit, movie);
+        return Objects.hash(id, description, country, year, producer, duration, ageLimit, movie);
     }
 }

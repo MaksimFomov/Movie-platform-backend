@@ -30,7 +30,8 @@ public class Order {
     public Order() {
     }
 
-    public Order(User user, Event event, Integer place) {
+    public Order(Long id, User user, Event event, Integer place) {
+        this.id = id;
         this.user = user;
         this.event = event;
         this.place = place;
@@ -38,6 +39,10 @@ public class Order {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public User getUser() {
@@ -69,11 +74,11 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(user, order.user) && Objects.equals(event, order.event) && Objects.equals(place, order.place);
+        return Objects.equals(id, order.id) && Objects.equals(user, order.user) && Objects.equals(event, order.event) && Objects.equals(place, order.place);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, event, place);
+        return Objects.hash(id, user, event, place);
     }
 }
