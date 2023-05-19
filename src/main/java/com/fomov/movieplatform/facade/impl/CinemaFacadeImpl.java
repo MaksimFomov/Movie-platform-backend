@@ -37,4 +37,30 @@ public class CinemaFacadeImpl implements CinemaFacade {
         Cinema addedCinema = cinemaService.addCinema(cinema);
         return cinemaMapper.toCinemaDTO(addedCinema);
     }
+
+    @Override
+    public void deleteCinema(Long cinemaId) {
+        cinemaService.deleteCinema(cinemaId);
+    }
+
+    @Override
+    public CinemaDTO updateCinema(Long cinemaId, CinemaDTO cinemaDTO) {
+        Cinema updatedCinema = cinemaService.updateCinema(cinemaId, cinemaDTO);
+        return cinemaMapper.toCinemaDTO(updatedCinema);
+    }
+
+    @Override
+    public void addMovieToCinema(Long cinemaId, Long movieId) {
+        cinemaService.addMovieToCinema(cinemaId, movieId);
+    }
+
+    @Override
+    public boolean isMovieAlreadyAdded(Long cinemaId, Long movieId) {
+        return cinemaService.isMovieAlreadyAdded(cinemaId, movieId);
+    }
+
+    @Override
+    public void deleteMovieFromCinema(Long cinemaId, Long movieId) {
+        cinemaService.deleteMovieFromCinema(cinemaId, movieId);
+    }
 }

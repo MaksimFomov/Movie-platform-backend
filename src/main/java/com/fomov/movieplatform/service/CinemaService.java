@@ -1,5 +1,6 @@
 package com.fomov.movieplatform.service;
 
+import com.fomov.movieplatform.dto.CinemaDTO;
 import com.fomov.movieplatform.model.Cinema;
 
 import java.util.List;
@@ -7,5 +8,12 @@ import java.util.List;
 public interface CinemaService {
     List<Cinema> getAllCinemas();
     Cinema getCinemaById(Long id);
+
     Cinema addCinema(Cinema cinema);
+    void deleteCinema(Long cinemaId);
+    Cinema updateCinema(Long cinemaId, CinemaDTO cinemaDTO);
+
+    void addMovieToCinema(Long cinemaId, Long movieId);
+    boolean isMovieAlreadyAdded(Long cinemaId, Long movieId);
+    void deleteMovieFromCinema(Long cinemaId, Long movieId);
 }

@@ -9,13 +9,10 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
-
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
-    @Mappings({
-            @Mapping(target = "userDTO", ignore = true),
-            @Mapping(target = "eventDTO", ignore = true)
-    })
+    @Mapping(target = "userDTO", ignore = true)
+    @Mapping(target = "eventDTO", ignore = true)
     OrderDTO toOrderDTO(Order order);
 
     @AfterMapping

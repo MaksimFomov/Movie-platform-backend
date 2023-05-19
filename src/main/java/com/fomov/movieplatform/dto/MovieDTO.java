@@ -12,14 +12,14 @@ public class MovieDTO {
     private String producer;
     private int duration;
     private int ageLimit;
-    private GenreDTO genreDTO;
+    private String genreName;
     private List<CinemaDTO> cinemaDTOs;
     private List<EventDTO> eventDTOs;
 
     public MovieDTO() {
     }
 
-    public MovieDTO(Long id, String name, String description, String country, int year, String producer, int duration, int ageLimit, GenreDTO genreDTO, List<CinemaDTO> cinemaDTOs, List<EventDTO> eventDTOs) {
+    public MovieDTO(Long id, String name, String description, String country, int year, String producer, int duration, int ageLimit, String genreName, List<CinemaDTO> cinemaDTOs, List<EventDTO> eventDTOs) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -28,7 +28,7 @@ public class MovieDTO {
         this.producer = producer;
         this.duration = duration;
         this.ageLimit = ageLimit;
-        this.genreDTO = genreDTO;
+        this.genreName = genreName;
         this.cinemaDTOs = cinemaDTOs;
         this.eventDTOs = eventDTOs;
     }
@@ -97,12 +97,12 @@ public class MovieDTO {
         this.ageLimit = ageLimit;
     }
 
-    public GenreDTO getGenreDTO() {
-        return genreDTO;
+    public String getGenreName() {
+        return genreName;
     }
 
-    public void setGenreDTO(GenreDTO genreDTO) {
-        this.genreDTO = genreDTO;
+    public void setGenreName(String genreName) {
+        this.genreName = genreName;
     }
 
     public List<CinemaDTO> getCinemaDTOs() {
@@ -126,12 +126,12 @@ public class MovieDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MovieDTO movieDTO = (MovieDTO) o;
-        return year == movieDTO.year && duration == movieDTO.duration && ageLimit == movieDTO.ageLimit && Objects.equals(id, movieDTO.id) && Objects.equals(name, movieDTO.name) && Objects.equals(description, movieDTO.description) && Objects.equals(country, movieDTO.country) && Objects.equals(producer, movieDTO.producer) && Objects.equals(genreDTO, movieDTO.genreDTO) && Objects.equals(cinemaDTOs, movieDTO.cinemaDTOs) && Objects.equals(eventDTOs, movieDTO.eventDTOs);
+        return year == movieDTO.year && duration == movieDTO.duration && ageLimit == movieDTO.ageLimit && Objects.equals(id, movieDTO.id) && Objects.equals(name, movieDTO.name) && Objects.equals(description, movieDTO.description) && Objects.equals(country, movieDTO.country) && Objects.equals(producer, movieDTO.producer) && Objects.equals(genreName, movieDTO.genreName) && Objects.equals(cinemaDTOs, movieDTO.cinemaDTOs) && Objects.equals(eventDTOs, movieDTO.eventDTOs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, country, year, producer, duration, ageLimit, genreDTO, cinemaDTOs, eventDTOs);
+        return Objects.hash(id, name, description, country, year, producer, duration, ageLimit, genreName, cinemaDTOs, eventDTOs);
     }
 }
 

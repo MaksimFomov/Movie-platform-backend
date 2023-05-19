@@ -1,7 +1,11 @@
 package com.fomov.movieplatform.controller;
 
 import com.fomov.movieplatform.dto.CinemaDTO;
+import com.fomov.movieplatform.dto.MovieDTO;
+import com.fomov.movieplatform.exception.cinema.CinemaNotFoundException;
+import com.fomov.movieplatform.exception.movie.MovieNotFoundException;
 import com.fomov.movieplatform.facade.CinemaFacade;
+import com.fomov.movieplatform.mapper.CinemaMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,5 +40,62 @@ public class CinemaController {
     ResponseEntity<CinemaDTO> addCinema(@RequestBody CinemaDTO cinemaDTO) {
         CinemaDTO addedCinema = cinemaFacade.addCinema(cinemaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedCinema);
+    }
+
+    @DeleteMapping("/{cinemaId}")
+    public ResponseEntity<String> deleteCinema(@PathVariable Long cinemaId) {
+        try {
+            cinemaFacade.deleteCinema(cinemaId);
+            return ResponseEntity.ok("Cinema successfully deleted.");
+        } catch (CinemaNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{cinemaId}")
+    public ResponseEntity<CinemaDTO> updateCinema(@PathVariable Long cinemaId, @RequestBody CinemaDTO cinemaDTO) {
+        try {
+            CinemaDTO updatedCinema = cinemaFacade.updateCinema(cinemaId, cinemaDTO);
+            return ResponseEntity.ok(updatedCinema);
+        } catch (CinemaNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{cinemaId}/movies/{movieId}")
+    public ResponseEntity<String> addMovieToCinema(
+            @PathVariable Long cinemaId,
+            @PathVariable Long movieId
+    ) {
+        if (cinemaFacade.isMovieAlreadyAdded(cinemaId, movieId)) {
+            return ResponseEntity.badRequest().body("Movie already added to the cinema.");
+        }
+
+        try {
+            cinemaFacade.addMovieToCinema(cinemaId, movieId);
+
+            return ResponseEntity.ok("Movie added to cinema successfully.");
+        } catch (CinemaNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (MovieNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{cinemaId}/movies/{movieId}")
+    public ResponseEntity<String> deleteMovieFromCinema(
+            @PathVariable Long cinemaId,
+            @PathVariable Long movieId
+    ) {
+        try {
+            cinemaFacade.deleteMovieFromCinema(cinemaId, movieId);
+            return ResponseEntity.ok("Movie successfully removed from cinema.");
+        } catch (CinemaNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (MovieNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

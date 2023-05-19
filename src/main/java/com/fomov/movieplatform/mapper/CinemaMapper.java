@@ -1,28 +1,23 @@
 package com.fomov.movieplatform.mapper;
 
 import com.fomov.movieplatform.dto.CinemaDTO;
-import com.fomov.movieplatform.dto.EventDTO;
-import com.fomov.movieplatform.dto.MovieDTO;
 import com.fomov.movieplatform.model.Cinema;
-import com.fomov.movieplatform.model.Event;
-import com.fomov.movieplatform.model.Movie;
-import org.mapstruct.*;
+import org.mapstruct.AfterMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface CinemaMapper {
-
     CinemaMapper INSTANCE = Mappers.getMapper(CinemaMapper.class);
 
-    @Mappings({
-            @Mapping(source = "cinemaDetails.address", target = "address"),
-            @Mapping(source = "cinemaDetails.capacity", target = "capacity"),
-            @Mapping(target = "movieDTOs", ignore = true),
-            @Mapping(target = "eventDTOs", ignore = true)
-    })
+    @Mapping(source = "cinemaDetails.address", target = "address")
+    @Mapping(source = "cinemaDetails.capacity", target = "capacity")
+    @Mapping(source = "movies", target = "movieDTOs")
+    @Mapping(source = "events", target = "eventDTOs")
     CinemaDTO toCinemaDTO(Cinema cinema);
 
     @AfterMapping
@@ -37,21 +32,11 @@ public interface CinemaMapper {
 
     @Mapping(source = "address", target = "cinemaDetails.address")
     @Mapping(source = "capacity", target = "cinemaDetails.capacity")
+    @Mapping(source = "movieDTOs", target = "movies")
+    @Mapping(source = "eventDTOs", target = "events")
     Cinema toCinema(CinemaDTO cinemaDTO);
 
     List<CinemaDTO> toCinemaDTOs(List<Cinema> cinemas);
 
-    default List<Movie> toMovies(List<MovieDTO> movieDTOs) {
-        return movieDTOs.stream()
-                .map(MovieMapper.INSTANCE::toMovie)
-                .collect(Collectors.toList());
-    }
-
-    default List<Event> toEvents(List<EventDTO> eventDTOs) {
-        return eventDTOs.stream()
-                .map(EventMapper.INSTANCE::toEvent)
-                .collect(Collectors.toList());
-    }
+    List<Cinema> toCinemas(List<CinemaDTO> cinemaDTOs);
 }
-
-

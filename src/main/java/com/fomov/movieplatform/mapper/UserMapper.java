@@ -14,12 +14,9 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    @Mappings({
-            @Mapping(target = "orderDTOs", ignore = true)
-    })
+    @Mapping(target = "orderDTOs", ignore = true)
     UserDTO toUserDTO(User user);
 
     User toUser(UserDTO userDTO);
