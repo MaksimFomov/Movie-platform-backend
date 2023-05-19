@@ -7,6 +7,8 @@ import com.fomov.movieplatform.model.Cinema;
 import com.fomov.movieplatform.service.CinemaService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CinemaFacadeImpl implements CinemaFacade {
     private final CinemaService cinemaService;
@@ -15,6 +17,18 @@ public class CinemaFacadeImpl implements CinemaFacade {
     public CinemaFacadeImpl(CinemaService cinemaService, CinemaMapper cinemaMapper) {
         this.cinemaService = cinemaService;
         this.cinemaMapper = cinemaMapper;
+    }
+
+    @Override
+    public List<CinemaDTO> getAllCinemas() {
+        List<Cinema> receivedCinemas = cinemaService.getAllCinemas();
+        return cinemaMapper.toCinemaDTOs(receivedCinemas);
+    }
+
+    @Override
+    public CinemaDTO getCinemaById(Long id) {
+        Cinema receivedCinema = cinemaService.getCinemaById(id);
+        return cinemaMapper.toCinemaDTO(receivedCinema);
     }
 
     @Override
