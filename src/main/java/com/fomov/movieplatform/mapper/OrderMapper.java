@@ -2,24 +2,32 @@ package com.fomov.movieplatform.mapper;
 
 import com.fomov.movieplatform.dto.OrderDTO;
 import com.fomov.movieplatform.model.Order;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {UserMapper.class, EventMapper.class})
+@Mapper(componentModel = "spring")
 public interface OrderMapper {
 
-    @Mapping(source = "user", target = "userDTO")
-    @Mapping(source = "event", target = "eventDTO")
-    OrderDTO orderToOrderDTO(Order order);
+    OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
-    @Mapping(source = "userDTO", target = "user")
-    @Mapping(source = "eventDTO", target = "event")
-    Order orderDTOToOrder(OrderDTO orderDTO);
+    @Mappings({
+            @Mapping(target = "userDTO", ignore = true),
+            @Mapping(target = "eventDTO", ignore = true)
+    })
+    OrderDTO toOrderDTO(Order order);
 
-    List<OrderDTO> ordersToOrderDTOs(List<Order> orders);
+    @AfterMapping
+    default void setUserDTO(@MappingTarget OrderDTO orderDTO, Order order) {
+        orderDTO.setUserDTO(UserMapper.INSTANCE.toUserDTO(order.getUser()));
+    }
 
-    List<Order> orderDTOsToOrders(List<OrderDTO> orderDTOs);
+    @AfterMapping
+    default void setEventDTO(@MappingTarget OrderDTO orderDTO, Order order) {
+        orderDTO.setEventDTO(EventMapper.INSTANCE.toEventDTO(order.getEvent()));
+    }
+
+    Order toOrder(OrderDTO orderDTO);
 }
 

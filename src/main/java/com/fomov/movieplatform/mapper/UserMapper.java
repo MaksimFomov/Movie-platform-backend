@@ -1,23 +1,33 @@
 package com.fomov.movieplatform.mapper;
 
+import com.fomov.movieplatform.dto.OrderDTO;
 import com.fomov.movieplatform.dto.UserDTO;
+import com.fomov.movieplatform.model.Order;
 import com.fomov.movieplatform.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring", uses = OrderMapper.class)
+@Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    @Mapping(source = "orders", target = "orderDTOs")
-    UserDTO userToUserDTO(User user);
+    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    @Mapping(source = "orderDTOs", target = "orders")
-    User userDTOToUser(UserDTO userDTO);
+    @Mappings({
+            @Mapping(target = "orderDTOs", ignore = true)
+    })
+    UserDTO toUserDTO(User user);
 
-    List<UserDTO> usersToUserDTOs(List<User> users);
+    User toUser(UserDTO userDTO);
 
-    List<User> userDTOsToUsers(List<UserDTO> userDTOs);
+    default List<Order> toOrders(List<OrderDTO> orderDTOs) {
+        return orderDTOs.stream()
+                .map(OrderMapper.INSTANCE::toOrder)
+                .collect(Collectors.toList());
+    }
 }
 

@@ -4,21 +4,17 @@ import com.fomov.movieplatform.dto.GenreDTO;
 import com.fomov.movieplatform.model.Genre;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = MovieMapper.class)
+@Mapper(componentModel = "spring")
 public interface GenreMapper {
+    GenreMapper INSTANCE = Mappers.getMapper(GenreMapper.class);
 
-    @Mapping(source = "movies", target = "movieDTOs")
-    GenreDTO genreToGenreDTO(Genre genre);
+    GenreDTO toGenreDTO(Genre genre);
 
-    @Mapping(source = "movieDTOs", target = "movies")
-    Genre genreDTOToGenre(GenreDTO genreDTO);
-
-    List<GenreDTO> genresToGenreDTOs(List<Genre> genres);
-
-    List<Genre> genreDTOsToGenres(List<GenreDTO> genreDTOs);
+    Genre toGenre(GenreDTO genreDTO);
 }
 
 

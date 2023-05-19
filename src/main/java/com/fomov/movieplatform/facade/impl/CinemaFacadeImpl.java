@@ -18,8 +18,9 @@ public class CinemaFacadeImpl implements CinemaFacade {
     }
 
     @Override
-    public void addCinema(CinemaDTO cinemaDTO) {
-        Cinema cinema = cinemaMapper.cinemaDTOToCinema(cinemaDTO);
-        cinemaService.addCinema(cinema);
+    public CinemaDTO addCinema(CinemaDTO cinemaDTO) {
+        Cinema cinema = cinemaMapper.toCinema(cinemaDTO);
+        Cinema addedCinema = cinemaService.addCinema(cinema);
+        return cinemaMapper.toCinemaDTO(addedCinema);
     }
 }

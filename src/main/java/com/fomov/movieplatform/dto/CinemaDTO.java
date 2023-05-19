@@ -2,7 +2,6 @@ package com.fomov.movieplatform.dto;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 public class CinemaDTO {
     private Long id;

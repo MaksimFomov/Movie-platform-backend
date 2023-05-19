@@ -70,6 +70,7 @@ public class Cinema {
 
     public void setCinemaDetails(CinemaDetails cinemaDetails) {
         this.cinemaDetails = cinemaDetails;
+        cinemaDetails.setCinema(this);
     }
 
     public List<Movie> getMovies() {
