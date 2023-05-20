@@ -2,10 +2,7 @@ package com.fomov.movieplatform.mapper;
 
 import com.fomov.movieplatform.dto.MovieDTO;
 import com.fomov.movieplatform.model.Movie;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -14,37 +11,27 @@ import java.util.List;
 public interface MovieMapper {
     MovieMapper INSTANCE = Mappers.getMapper(MovieMapper.class);
 
-    @Mapping(source = "movieDetails.description", target = "description")
-    @Mapping(source = "movieDetails.country", target = "country")
-    @Mapping(source = "movieDetails.year", target = "year")
-    @Mapping(source = "movieDetails.producer", target = "producer")
-    @Mapping(source = "movieDetails.duration", target = "duration")
-    @Mapping(source = "movieDetails.ageLimit", target = "ageLimit")
-    @Mapping(source = "genre.name", target = "genreName")
-    @Mapping(target = "cinemaDTOs", ignore = true)
-    @Mapping(target = "eventDTOs", ignore = true)
-    MovieDTO toMovieDTO(Movie movie);
-
-    @AfterMapping
-    default void setCinemaDTOs(@MappingTarget MovieDTO movieDTO, Movie movie) {
-        movieDTO.setCinemaDTOs(CinemaMapper.INSTANCE.toCinemaDTOs(movie.getCinemas()));
-    }
-
-    @AfterMapping
-    default void setEventDTOs(@MappingTarget MovieDTO movieDTO, Movie movie) {
-        movieDTO.setEventDTOs(EventMapper.INSTANCE.toEventDTOs(movie.getEvents()));
-    }
-
-    @Mapping(source = "description", target = "movieDetails.description")
-    @Mapping(source = "country", target = "movieDetails.country")
-    @Mapping(source = "year", target = "movieDetails.year")
-    @Mapping(source = "producer", target = "movieDetails.producer")
-    @Mapping(source = "duration", target = "movieDetails.duration")
-    @Mapping(source = "ageLimit", target = "movieDetails.ageLimit")
-    @Mapping(source = "genreName", target = "genre.name")
+    @Mapping(target = "movieDetails.description", source = "description")
+    @Mapping(target = "movieDetails.country", source = "country")
+    @Mapping(target = "movieDetails.year", source = "year")
+    @Mapping(target = "movieDetails.producer", source = "producer")
+    @Mapping(target = "movieDetails.duration", source = "duration")
+    @Mapping(target = "movieDetails.ageLimit", source = "ageLimit")
+    @Mapping(target = "genre.name", source = "genreName")
     Movie toMovie(MovieDTO movieDTO);
 
+    @Mapping(target = "description", source = "movieDetails.description")
+    @Mapping(target = "country", source = "movieDetails.country")
+    @Mapping(target = "year", source = "movieDetails.year")
+    @Mapping(target = "producer", source = "movieDetails.producer")
+    @Mapping(target = "duration", source = "movieDetails.duration")
+    @Mapping(target = "ageLimit", source = "movieDetails.ageLimit")
+    @Mapping(target = "genreName", source = "genre.name")
+    MovieDTO toMovieDTO(Movie movie);
+
+    @IterableMapping(elementTargetType = MovieDTO.class)
     List<MovieDTO> toMovieDTOs(List<Movie> movies);
 
+    @IterableMapping(elementTargetType = Movie.class)
     List<Movie> toMovies(List<MovieDTO> movieDTOs);
 }

@@ -52,7 +52,7 @@ public class CinemaServiceImpl implements CinemaService {
     }
 
     @Override
-    public Cinema updateCinema(Long cinemaId, CinemaDTO cinemaDTO) throws CinemaNotFoundException {
+    public Cinema updateCinema(Long cinemaId, CinemaDTO cinemaDTO) {
         Cinema cinema = cinemaRepository.findById(cinemaId)
                 .orElseThrow(() -> new CinemaNotFoundException("Cinema not found with ID: " + cinemaId));
 

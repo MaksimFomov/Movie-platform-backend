@@ -7,24 +7,20 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = EventMapper.class)
 public interface OrderMapper {
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
-    @Mapping(target = "userDTO", ignore = true)
-    @Mapping(target = "eventDTO", ignore = true)
+    @Mapping(target = "eventDTO", source = "event")
     OrderDTO toOrderDTO(Order order);
 
-    @AfterMapping
-    default void setUserDTO(@MappingTarget OrderDTO orderDTO, Order order) {
-        orderDTO.setUserDTO(UserMapper.INSTANCE.toUserDTO(order.getUser()));
-    }
-
-    @AfterMapping
-    default void setEventDTO(@MappingTarget OrderDTO orderDTO, Order order) {
-        orderDTO.setEventDTO(EventMapper.INSTANCE.toEventDTO(order.getEvent()));
-    }
-
+    @Mapping(target = "event", source = "eventDTO")
     Order toOrder(OrderDTO orderDTO);
+
+    @IterableMapping(elementTargetType = OrderDTO.class)
+    List<OrderDTO> toOrderDTOs(List<Order> orders);
+
+    @IterableMapping(elementTargetType = Order.class)
+    List<Order> toOrders(List<OrderDTO> orderDTOs);
 }
 
