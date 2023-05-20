@@ -1,11 +1,9 @@
 package com.fomov.movieplatform.controller;
 
 import com.fomov.movieplatform.dto.CinemaDTO;
-import com.fomov.movieplatform.dto.MovieDTO;
 import com.fomov.movieplatform.exception.cinema.CinemaNotFoundException;
 import com.fomov.movieplatform.exception.movie.MovieNotFoundException;
 import com.fomov.movieplatform.facade.CinemaFacade;
-import com.fomov.movieplatform.mapper.CinemaMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +25,9 @@ public class CinemaController {
         return ResponseEntity.ok(cinemaDTOs);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CinemaDTO> getCinemaById(@PathVariable Long id) {
-        CinemaDTO cinemaDTO = cinemaFacade.getCinemaById(id);
+    @GetMapping("/{cinemaId}")
+    public ResponseEntity<CinemaDTO> getCinemaById(@PathVariable Long cinemaId) {
+        CinemaDTO cinemaDTO = cinemaFacade.getCinemaById(cinemaId);
         if (cinemaDTO == null) {
             return ResponseEntity.notFound().build();
         }

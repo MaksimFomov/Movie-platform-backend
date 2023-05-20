@@ -26,8 +26,8 @@ public class CinemaFacadeImpl implements CinemaFacade {
     }
 
     @Override
-    public CinemaDTO getCinemaById(Long id) {
-        Cinema receivedCinema = cinemaService.getCinemaById(id);
+    public CinemaDTO getCinemaById(Long cinemaId) {
+        Cinema receivedCinema = cinemaService.getCinemaById(cinemaId);
         return cinemaMapper.toCinemaDTO(receivedCinema);
     }
 

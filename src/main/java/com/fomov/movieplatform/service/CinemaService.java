@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CinemaService {
     List<Cinema> getAllCinemas();
-    Cinema getCinemaById(Long id);
+    Cinema getCinemaById(Long cinemaId);
 
     Cinema addCinema(Cinema cinema);
     void deleteCinema(Long cinemaId);

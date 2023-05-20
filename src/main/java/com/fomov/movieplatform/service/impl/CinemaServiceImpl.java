@@ -1,7 +1,6 @@
 package com.fomov.movieplatform.service.impl;
 
 import com.fomov.movieplatform.dto.CinemaDTO;
-import com.fomov.movieplatform.dto.MovieDTO;
 import com.fomov.movieplatform.exception.cinema.CinemaNotFoundException;
 import com.fomov.movieplatform.exception.movie.MovieNotFoundException;
 import com.fomov.movieplatform.model.Cinema;
@@ -25,16 +24,14 @@ public class CinemaServiceImpl implements CinemaService {
         this.movieRepository = movieRepository;
     }
 
-    @Transactional
     @Override
     public List<Cinema> getAllCinemas() {
         return cinemaRepository.findAll();
     }
 
-    @Transactional
     @Override
-    public Cinema getCinemaById(Long id) {
-        return cinemaRepository.findById(id).orElse(null);
+    public Cinema getCinemaById(Long cinemaId) {
+        return cinemaRepository.findById(cinemaId).orElse(null);
     }
 
     @Transactional
@@ -43,6 +40,7 @@ public class CinemaServiceImpl implements CinemaService {
         return cinemaRepository.save(cinema);
     }
 
+    @Transactional
     @Override
     public void deleteCinema(Long cinemaId) {
         Cinema cinema = cinemaRepository.findById(cinemaId)
@@ -51,6 +49,7 @@ public class CinemaServiceImpl implements CinemaService {
         cinemaRepository.delete(cinema);
     }
 
+    @Transactional
     @Override
     public Cinema updateCinema(Long cinemaId, CinemaDTO cinemaDTO) {
         Cinema cinema = cinemaRepository.findById(cinemaId)
@@ -85,6 +84,7 @@ public class CinemaServiceImpl implements CinemaService {
         return cinema != null && movie != null && cinema.getMovies().contains(movie);
     }
 
+    @Transactional
     @Override
     public void deleteMovieFromCinema(Long cinemaId, Long movieId) {
         Cinema cinema = getCinemaById(cinemaId);

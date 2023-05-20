@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CinemaFacade {
     List<CinemaDTO> getAllCinemas();
-    CinemaDTO getCinemaById(Long id);
+    CinemaDTO getCinemaById(Long cinemaId);
 
     CinemaDTO addCinema(CinemaDTO cinemaDTO);
     void deleteCinema(Long cinemaId);
