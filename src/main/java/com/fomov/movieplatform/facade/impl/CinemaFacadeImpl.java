@@ -45,7 +45,8 @@ public class CinemaFacadeImpl implements CinemaFacade {
 
     @Override
     public CinemaDTO updateCinema(Long cinemaId, CinemaDTO cinemaDTO) {
-        Cinema updatedCinema = cinemaService.updateCinema(cinemaId, cinemaDTO);
+        Cinema cinema = cinemaMapper.toCinema(cinemaDTO);
+        Cinema updatedCinema = cinemaService.updateCinema(cinemaId, cinema);
         return cinemaMapper.toCinemaDTO(updatedCinema);
     }
 

@@ -50,21 +50,21 @@ public class MovieServiceImpl implements MovieService {
 
     @Transactional
     @Override
-    public Movie updateMovie(Long movieId, MovieDTO movieDTO) {
-        Movie movie = movieRepository.findById(movieId)
+    public Movie updateMovie(Long movieId, Movie movie) {
+        Movie updatedMovie = movieRepository.findById(movieId)
                 .orElseThrow(() -> new MovieNotFoundException("Movie not found with ID: " + movieId));
 
-        movie.setName(movieDTO.getName());
-        MovieDetails movieDetails = movie.getMovieDetails();
-        movieDetails.setDescription(movieDTO.getDescription());
-        movieDetails.setCountry(movieDTO.getCountry());
-        movieDetails.setYear(movieDTO.getYear());
-        movieDetails.setProducer(movieDTO.getProducer());
-        movieDetails.setDuration(movieDTO.getDuration());
-        movieDetails.setAgeLimit(movieDTO.getAgeLimit());
-        movie.setMovieDetails(movieDetails);
-        movie.setGenre(genreRepository.findByName(movieDTO.getGenreName()));
+        updatedMovie.setName(movie.getName());
+        MovieDetails updatedMovieDetails = updatedMovie.getMovieDetails();
+        updatedMovieDetails.setDescription(movie.getMovieDetails().getDescription());
+        updatedMovieDetails.setCountry(movie.getMovieDetails().getCountry());
+        updatedMovieDetails.setYear(movie.getMovieDetails().getYear());
+        updatedMovieDetails.setProducer(movie.getMovieDetails().getProducer());
+        updatedMovieDetails.setDuration(movie.getMovieDetails().getDuration());
+        updatedMovieDetails.setAgeLimit(movie.getMovieDetails().getAgeLimit());
+        updatedMovie.setMovieDetails(updatedMovieDetails);
+        updatedMovie.setGenre(genreRepository.findByName(movie.getGenre().getName()));
 
-        return movieRepository.save(movie);
+        return movieRepository.save(updatedMovie);
     }
 }

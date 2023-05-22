@@ -51,17 +51,17 @@ public class CinemaServiceImpl implements CinemaService {
 
     @Transactional
     @Override
-    public Cinema updateCinema(Long cinemaId, CinemaDTO cinemaDTO) {
-        Cinema cinema = cinemaRepository.findById(cinemaId)
+    public Cinema updateCinema(Long cinemaId, Cinema cinema) {
+        Cinema updatedCinema = cinemaRepository.findById(cinemaId)
                 .orElseThrow(() -> new CinemaNotFoundException("Cinema not found with ID: " + cinemaId));
 
-        cinema.setName(cinemaDTO.getName());
-        CinemaDetails cinemaDetails = cinema.getCinemaDetails();
-        cinemaDetails.setAddress(cinemaDTO.getAddress());
-        cinemaDetails.setCapacity(cinemaDTO.getCapacity());
-        cinema.setCinemaDetails(cinemaDetails);
+        updatedCinema.setName(cinema.getName());
+        CinemaDetails updatedCinemaDetails = updatedCinema.getCinemaDetails();
+        updatedCinemaDetails.setAddress(cinema.getCinemaDetails().getAddress());
+        updatedCinemaDetails.setCapacity(cinema.getCinemaDetails().getCapacity());
+        updatedCinema.setCinemaDetails(updatedCinemaDetails);
 
-        return cinemaRepository.save(cinema);
+        return cinemaRepository.save(updatedCinema);
     }
 
     @Transactional

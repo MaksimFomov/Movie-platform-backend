@@ -45,7 +45,8 @@ public class MovieFacadeImpl implements MovieFacade {
 
     @Override
     public MovieDTO updateMovie(Long movieId, MovieDTO movieDTO) {
-        Movie updatedMovie = movieService.updateMovie(movieId, movieDTO);
+        Movie movie = movieMapper.toMovie(movieDTO);
+        Movie updatedMovie = movieService.updateMovie(movieId, movie);
         return movieMapper.toMovieDTO(updatedMovie);
     }
 }

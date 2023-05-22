@@ -11,7 +11,7 @@ public interface CinemaService {
 
     Cinema addCinema(Cinema cinema);
     void deleteCinema(Long cinemaId);
-    Cinema updateCinema(Long cinemaId, CinemaDTO cinemaDTO);
+    Cinema updateCinema(Long cinemaId, Cinema cinema);
 
     void addMovieToCinema(Long cinemaId, Long movieId);
     boolean isMovieAlreadyAdded(Long cinemaId, Long movieId);
