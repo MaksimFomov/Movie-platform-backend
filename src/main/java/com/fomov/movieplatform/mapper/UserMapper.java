@@ -25,4 +25,3 @@ public interface UserMapper {
     @IterableMapping(elementTargetType = User.class)
     List<User> toUsers(List<UserDTO> userDTOs);
 }
-

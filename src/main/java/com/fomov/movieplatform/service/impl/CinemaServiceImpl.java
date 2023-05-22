@@ -8,7 +8,7 @@ import com.fomov.movieplatform.model.Movie;
 import com.fomov.movieplatform.repository.CinemaRepository;
 import com.fomov.movieplatform.repository.MovieRepository;
 import com.fomov.movieplatform.service.CinemaService;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

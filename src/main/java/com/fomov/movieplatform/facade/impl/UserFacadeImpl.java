@@ -1,10 +1,10 @@
-package com.fomov.movieplatform.facade.impl;
+/*package com.fomov.movieplatform.facade.impl;
 
 import com.fomov.movieplatform.facade.UserFacade;
-import com.fomov.movieplatform.service.UserService;
+import com.fomov.movieplatform.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Service;
 
 @Service
-public record UserFacadeImpl(UserService userService) implements UserFacade {
+public record UserFacadeImpl(User userService) implements UserFacade {
 
-}
+}*/

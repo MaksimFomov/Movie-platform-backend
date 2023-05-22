@@ -4,7 +4,7 @@ import com.fomov.movieplatform.exception.notfound.GenreNotFoundException;
 import com.fomov.movieplatform.model.Genre;
 import com.fomov.movieplatform.repository.GenreRepository;
 import com.fomov.movieplatform.service.GenreService;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
