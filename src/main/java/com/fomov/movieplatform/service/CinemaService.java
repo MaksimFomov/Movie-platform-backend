@@ -1,6 +1,5 @@
 package com.fomov.movieplatform.service;
 
-import com.fomov.movieplatform.dto.CinemaDTO;
 import com.fomov.movieplatform.model.Cinema;
 
 import java.util.List;

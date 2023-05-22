@@ -1,8 +1,7 @@
 package com.fomov.movieplatform.service.impl;
 
-import com.fomov.movieplatform.dto.CinemaDTO;
-import com.fomov.movieplatform.exception.cinema.CinemaNotFoundException;
-import com.fomov.movieplatform.exception.movie.MovieNotFoundException;
+import com.fomov.movieplatform.exception.notfound.CinemaNotFoundException;
+import com.fomov.movieplatform.exception.notfound.MovieNotFoundException;
 import com.fomov.movieplatform.model.Cinema;
 import com.fomov.movieplatform.model.CinemaDetails;
 import com.fomov.movieplatform.model.Movie;

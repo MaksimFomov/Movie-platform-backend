@@ -1,8 +1,6 @@
 package com.fomov.movieplatform.service.impl;
 
-import com.fomov.movieplatform.dto.MovieDTO;
-import com.fomov.movieplatform.exception.cinema.CinemaNotFoundException;
-import com.fomov.movieplatform.exception.movie.MovieNotFoundException;
+import com.fomov.movieplatform.exception.notfound.MovieNotFoundException;
 import com.fomov.movieplatform.model.Movie;
 import com.fomov.movieplatform.model.MovieDetails;
 import com.fomov.movieplatform.repository.GenreRepository;
@@ -30,7 +28,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie getMovieById(Long movieId) {
-        return movieRepository.findById(movieId).orElse(null);
+        return movieRepository.findById(movieId)
+                .orElseThrow(() -> new MovieNotFoundException("Movie not found with ID: " + movieId));
     }
 
     @Transactional

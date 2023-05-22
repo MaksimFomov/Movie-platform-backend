@@ -1,9 +1,7 @@
 package com.fomov.movieplatform.controller;
 
-import com.fomov.movieplatform.dto.CinemaDTO;
 import com.fomov.movieplatform.dto.MovieDTO;
-import com.fomov.movieplatform.exception.cinema.CinemaNotFoundException;
-import com.fomov.movieplatform.exception.movie.MovieNotFoundException;
+import com.fomov.movieplatform.exception.notfound.MovieNotFoundException;
 import com.fomov.movieplatform.facade.MovieFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
