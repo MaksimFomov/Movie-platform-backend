@@ -1,5 +1,7 @@
 package com.fomov.movieplatform.service.impl;
 
+import com.fomov.movieplatform.exception.exists.UsernameExistsException;
+import com.fomov.movieplatform.exception.notfound.UserNotFoundException;
 import com.fomov.movieplatform.model.User;
 import com.fomov.movieplatform.repository.UserRepository;
 import com.fomov.movieplatform.security.JwtTokenUtil;
@@ -11,6 +13,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -28,6 +32,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User registerUser(User user) {
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new UsernameExistsException("Username already exists: " + user.getUsername());
+        }
+
         User newUser = new User();
         newUser.setUsername(user.getUsername());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -46,6 +54,27 @@ public class UserServiceImpl implements UserService {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return jwtTokenUtil.generateToken((UserDetails) authentication.getPrincipal());
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
+    }
+
+    @Override
+    public void updatePassword(Long userId, String newPassword) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found with ID: " + userId));
+
+        System.out.println(newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
 }
 

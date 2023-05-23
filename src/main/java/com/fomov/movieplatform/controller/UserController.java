@@ -1,13 +1,15 @@
 package com.fomov.movieplatform.controller;
 
-import com.fomov.movieplatform.dto.AuthenticationRequestDTO;
-import com.fomov.movieplatform.dto.AuthenticationResponseDTO;
-import com.fomov.movieplatform.dto.UserRegistrationDTO;
+import com.fomov.movieplatform.dto.*;
+import com.fomov.movieplatform.exception.notfound.UserNotFoundException;
 import com.fomov.movieplatform.facade.UserFacade;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -36,6 +38,29 @@ public class UserController {
         response.setToken(token);
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> userDTOs = userFacade.getAllUsers();
+        return ResponseEntity.ok(userDTOs);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId) {
+        try {
+            UserDTO userDTO = userFacade.getUserById(userId);
+            return ResponseEntity.ok(userDTO);
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<String> updatePassword(@PathVariable Long userId, @RequestBody Map<String, String> newPasswordMap) {
+        String newPassword = newPasswordMap.get("password");
+        userFacade.updatePassword(userId, newPassword);
+        return ResponseEntity.ok("Password updated successfully");
     }
 }
 

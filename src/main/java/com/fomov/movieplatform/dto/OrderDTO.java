@@ -6,14 +6,16 @@ public class OrderDTO {
     private Long id;
     private EventDTO eventDTO;
     private Integer place;
+    private Long userId;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(Long id, EventDTO eventDTO, Integer place) {
+    public OrderDTO(Long id, EventDTO eventDTO, Integer place, Long userId) {
         this.id = id;
         this.eventDTO = eventDTO;
         this.place = place;
+        this.userId = userId;
     }
 
     public Long getId() {
@@ -40,17 +42,25 @@ public class OrderDTO {
         this.place = place;
     }
 
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderDTO orderDTO = (OrderDTO) o;
-        return Objects.equals(id, orderDTO.id) && Objects.equals(eventDTO, orderDTO.eventDTO) && Objects.equals(place, orderDTO.place);
+        return Objects.equals(id, orderDTO.id) && Objects.equals(eventDTO, orderDTO.eventDTO) && Objects.equals(place, orderDTO.place) && Objects.equals(userId, orderDTO.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, eventDTO, place);
+        return Objects.hash(id, eventDTO, place, userId);
     }
 }
 
