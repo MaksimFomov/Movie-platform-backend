@@ -1,14 +1,13 @@
 package com.fomov.movieplatform.facade.impl;
 
-import com.fomov.movieplatform.dto.AuthenticationRequestDTO;
+import com.fomov.movieplatform.dto.AuthenticationResponseDTO;
 import com.fomov.movieplatform.dto.OrderDTO;
-import com.fomov.movieplatform.dto.UserDTO;
-import com.fomov.movieplatform.dto.UserRegistrationDTO;
+import com.fomov.movieplatform.dto.UserRequestDTO;
+import com.fomov.movieplatform.dto.UserResponseDTO;
 import com.fomov.movieplatform.facade.UserFacade;
-import com.fomov.movieplatform.mapper.AuthenticationRequestMapper;
 import com.fomov.movieplatform.mapper.OrderMapper;
-import com.fomov.movieplatform.mapper.UserMapper;
-import com.fomov.movieplatform.mapper.UserRegistrationMapper;
+import com.fomov.movieplatform.mapper.UserRequestMapper;
+import com.fomov.movieplatform.mapper.UserResponseMapper;
 import com.fomov.movieplatform.model.Order;
 import com.fomov.movieplatform.model.User;
 import com.fomov.movieplatform.service.UserService;
@@ -19,42 +18,41 @@ import java.util.List;
 @Service
 public class UserFacadeImpl implements UserFacade {
     private final UserService userService;
-    private final UserRegistrationMapper userRegistrationMapper;
-    private final AuthenticationRequestMapper authenticationRequestMapper;
-    private final UserMapper userMapper;
+    private final UserRequestMapper userRequestMapper;
+    private final UserResponseMapper userResponseMapper;
     private final OrderMapper orderMapper;
 
-    public UserFacadeImpl(UserService userService, UserRegistrationMapper userRegistrationMapper, AuthenticationRequestMapper authenticationRequestMapper, UserMapper userMapper, OrderMapper orderMapper) {
+    public UserFacadeImpl(UserService userService, UserRequestMapper userRequestMapper, UserResponseMapper userResponseMapper, OrderMapper orderMapper) {
         this.userService = userService;
-        this.userRegistrationMapper = userRegistrationMapper;
-        this.authenticationRequestMapper = authenticationRequestMapper;
-        this.userMapper = userMapper;
+        this.userRequestMapper = userRequestMapper;
+        this.userResponseMapper = userResponseMapper;
         this.orderMapper = orderMapper;
     }
 
     @Override
-    public UserRegistrationDTO registerUser(UserRegistrationDTO userRegistrationDTO) {
-        User user = userRegistrationMapper.toUser(userRegistrationDTO);
-        User addedUser = userService.registerUser(user);
-        return userRegistrationMapper.toUserRegistrationDTO(addedUser);
+    public void registerUser(UserRequestDTO userRequestDTO) {
+        User user = userRequestMapper.toUser(userRequestDTO);
+        userService.registerUser(user);
     }
 
     @Override
-    public String loginUser(AuthenticationRequestDTO authenticationRequestDTO) {
-        User user = authenticationRequestMapper.toUser(authenticationRequestDTO);
-        return userService.loginUser(user);
+    public AuthenticationResponseDTO loginUser(UserRequestDTO userRequestDTO) {
+        User user = userRequestMapper.toUser(userRequestDTO);
+        AuthenticationResponseDTO authenticationResponseDTO = new AuthenticationResponseDTO();
+        authenticationResponseDTO.setToken(userService.loginUser(user));
+        return authenticationResponseDTO;
     }
 
     @Override
-    public List<UserDTO> getAllUsers() {
+    public List<UserResponseDTO> getAllUsers() {
         List<User> receivedUsers = userService.getAllUsers();
-        return userMapper.toUserDTOs(receivedUsers);
+        return userResponseMapper.toUserResponseDTOs(receivedUsers);
     }
 
     @Override
-    public UserDTO getUserById(Long userId) {
+    public UserResponseDTO getUserById(Long userId) {
         User receivedUser = userService.getUserById(userId);
-        return userMapper.toUserDTO(receivedUser);
+        return userResponseMapper.toUserResponseDTO(receivedUser);
     }
 
     @Override

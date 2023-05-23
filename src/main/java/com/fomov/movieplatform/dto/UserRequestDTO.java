@@ -1,15 +1,10 @@
 package com.fomov.movieplatform.dto;
 
-public class UserRegistrationDTO {
+public class UserRequestDTO {
     private String username;
     private String password;
 
-    public UserRegistrationDTO() {
-    }
-
-    public UserRegistrationDTO(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public UserRequestDTO() {
     }
 
     public String getUsername() {

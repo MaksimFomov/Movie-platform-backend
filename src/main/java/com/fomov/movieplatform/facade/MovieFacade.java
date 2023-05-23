@@ -1,6 +1,7 @@
 package com.fomov.movieplatform.facade;
 
 import com.fomov.movieplatform.dto.MovieDTO;
+
 import java.util.List;
 
 public interface MovieFacade {

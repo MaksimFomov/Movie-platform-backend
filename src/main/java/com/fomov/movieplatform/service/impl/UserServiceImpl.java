@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User registerUser(User user) {
+    public void registerUser(User user) {
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new UsernameExistsException("Username already exists: " + user.getUsername());
         }
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
         newUser.setUsername(user.getUsername());
         newUser.setPassword(passwordEncoder.encode(user.getPassword()));
         newUser.setRole("user");
-        return userRepository.save(newUser);
+        userRepository.save(newUser);
     }
 
     @Override

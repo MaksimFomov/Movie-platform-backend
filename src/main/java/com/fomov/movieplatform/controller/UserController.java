@@ -1,14 +1,17 @@
 package com.fomov.movieplatform.controller;
 
-import com.fomov.movieplatform.dto.*;
+import com.fomov.movieplatform.dto.AuthenticationResponseDTO;
+import com.fomov.movieplatform.dto.OrderDTO;
+import com.fomov.movieplatform.dto.UserRequestDTO;
+import com.fomov.movieplatform.dto.UserResponseDTO;
+import com.fomov.movieplatform.exception.exists.UsernameExistsException;
 import com.fomov.movieplatform.exception.notfound.EventNotFoundException;
 import com.fomov.movieplatform.exception.notfound.UserNotFoundException;
 import com.fomov.movieplatform.exception.other.NoTicketsException;
 import com.fomov.movieplatform.facade.UserFacade;
-import org.springframework.web.bind.annotation.*;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -23,23 +26,21 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody UserRegistrationDTO userRegistrationDTO) {
+    public ResponseEntity<String> registerUser(@RequestBody UserRequestDTO userRequestDTO) {
         try {
-            userFacade.registerUser(userRegistrationDTO);
+            userFacade.registerUser(userRequestDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
-        } catch (Exception e) {
+        } catch (UsernameExistsException e) {
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }  catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponseDTO> login(@RequestBody AuthenticationRequestDTO authenticationRequestDTO) {
+    public ResponseEntity<AuthenticationResponseDTO> login(@RequestBody UserRequestDTO userRequestDTO) {
         try {
-            String token = userFacade.loginUser(authenticationRequestDTO);
-
-            AuthenticationResponseDTO response = new AuthenticationResponseDTO();
-            response.setToken(token);
-
+            AuthenticationResponseDTO response = userFacade.loginUser(userRequestDTO);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -47,20 +48,20 @@ public class UserController {
     }
 
     @GetMapping
-    ResponseEntity<List<UserDTO>> getAllUsers() {
+    ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         try {
-            List<UserDTO> userDTOs = userFacade.getAllUsers();
-            return ResponseEntity.ok(userDTOs);
+            List<UserResponseDTO> userResponseDTOS = userFacade.getAllUsers();
+            return ResponseEntity.ok(userResponseDTOS);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId) {
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long userId) {
         try {
-            UserDTO userDTO = userFacade.getUserById(userId);
-            return ResponseEntity.ok(userDTO);
+            UserResponseDTO userResponseDTO = userFacade.getUserById(userId);
+            return ResponseEntity.ok(userResponseDTO);
         } catch (UserNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (Exception e) {

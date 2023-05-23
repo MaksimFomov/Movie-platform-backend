@@ -4,9 +4,9 @@ import com.fomov.movieplatform.exception.notfound.EventNotFoundException;
 import com.fomov.movieplatform.model.Event;
 import com.fomov.movieplatform.repository.EventRepository;
 import com.fomov.movieplatform.service.EventService;
-import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service

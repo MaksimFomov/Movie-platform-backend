@@ -6,9 +6,9 @@ import com.fomov.movieplatform.model.MovieDetails;
 import com.fomov.movieplatform.repository.GenreRepository;
 import com.fomov.movieplatform.repository.MovieRepository;
 import com.fomov.movieplatform.service.MovieService;
-import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service

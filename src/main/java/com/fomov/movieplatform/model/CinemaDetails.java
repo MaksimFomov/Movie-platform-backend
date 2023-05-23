@@ -1,7 +1,6 @@
 package com.fomov.movieplatform.model;
 
 import javax.persistence.*;
-
 import java.util.Objects;
 
 @Entity

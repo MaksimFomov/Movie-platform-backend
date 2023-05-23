@@ -1,6 +1,6 @@
 package com.fomov.movieplatform.mapper;
 
-import com.fomov.movieplatform.dto.UserDTO;
+import com.fomov.movieplatform.dto.UserResponseDTO;
 import com.fomov.movieplatform.model.User;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
@@ -10,18 +10,18 @@ import org.mapstruct.factory.Mappers;
 import java.util.List;
 
 @Mapper(componentModel = "spring", uses = OrderMapper.class)
-public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+public interface UserResponseMapper {
+    UserResponseMapper INSTANCE = Mappers.getMapper(UserResponseMapper.class);
 
     @Mapping(target = "orderDTOs", source = "orders")
-    UserDTO toUserDTO(User user);
+    UserResponseDTO toUserResponseDTO(User user);
 
     @Mapping(target = "orders", source = "orderDTOs")
-    User toUser(UserDTO userDTO);
+    User toUser(UserResponseDTO userResponseDTO);
 
-    @IterableMapping(elementTargetType = UserDTO.class)
-    List<UserDTO> toUserDTOs(List<User> users);
+    @IterableMapping(elementTargetType = UserResponseDTO.class)
+    List<UserResponseDTO> toUserResponseDTOs(List<User> users);
 
     @IterableMapping(elementTargetType = User.class)
-    List<User> toUsers(List<UserDTO> userDTOs);
+    List<User> toUsers(List<UserResponseDTO> userResponseDTOS);
 }

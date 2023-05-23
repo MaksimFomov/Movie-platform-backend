@@ -2,7 +2,9 @@ package com.fomov.movieplatform.mapper;
 
 import com.fomov.movieplatform.dto.MovieDTO;
 import com.fomov.movieplatform.model.Movie;
-import org.mapstruct.*;
+import org.mapstruct.IterableMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
