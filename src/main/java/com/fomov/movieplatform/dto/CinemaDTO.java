@@ -1,7 +1,5 @@
 package com.fomov.movieplatform.dto;
 
-import java.util.Objects;
-
 public class CinemaDTO {
     private Long id;
     private String name;
@@ -9,13 +7,6 @@ public class CinemaDTO {
     private int capacity;
 
     public CinemaDTO() {
-    }
-
-    public CinemaDTO(Long id, String name, String address, int capacity) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.capacity = capacity;
     }
 
     public Long getId() {
@@ -48,19 +39,6 @@ public class CinemaDTO {
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CinemaDTO cinemaDTO = (CinemaDTO) o;
-        return capacity == cinemaDTO.capacity && Objects.equals(id, cinemaDTO.id) && Objects.equals(name, cinemaDTO.name) && Objects.equals(address, cinemaDTO.address);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, address, capacity);
     }
 }
 

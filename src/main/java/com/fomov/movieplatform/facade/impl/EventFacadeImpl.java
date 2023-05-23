@@ -1,8 +1,10 @@
 package com.fomov.movieplatform.facade.impl;
 
-import com.fomov.movieplatform.dto.EventDTO;
+import com.fomov.movieplatform.dto.EventRequestDTO;
+import com.fomov.movieplatform.dto.EventResponseDTO;
 import com.fomov.movieplatform.facade.EventFacade;
-import com.fomov.movieplatform.mapper.EventMapper;
+import com.fomov.movieplatform.mapper.EventRequestMapper;
+import com.fomov.movieplatform.mapper.EventResponseMapper;
 import com.fomov.movieplatform.model.Event;
 import com.fomov.movieplatform.service.EventService;
 import org.springframework.stereotype.Service;
@@ -12,30 +14,32 @@ import java.util.List;
 @Service
 public class EventFacadeImpl implements EventFacade {
     private final EventService eventService;
-    private final EventMapper eventMapper;
+    private final EventResponseMapper eventResponseMapper;
+    private final EventRequestMapper eventRequestMapper;
 
-    public EventFacadeImpl(EventService eventService, EventMapper eventMapper) {
+    public EventFacadeImpl(EventService eventService, EventResponseMapper eventResponseMapper, EventRequestMapper eventRequestMapper) {
         this.eventService = eventService;
-        this.eventMapper = eventMapper;
+        this.eventResponseMapper = eventResponseMapper;
+        this.eventRequestMapper = eventRequestMapper;
     }
 
     @Override
-    public List<EventDTO> getAllEvents() {
+    public List<EventResponseDTO> getAllEvents() {
         List<Event> receivedEvents = eventService.getAllEvents();
-        return eventMapper.toEventDTOs(receivedEvents);
+        return eventResponseMapper.toEventResponseDTOs(receivedEvents);
     }
 
     @Override
-    public EventDTO getEventById(Long eventId) {
+    public EventResponseDTO getEventById(Long eventId) {
         Event receivedEvent = eventService.getEventById(eventId);
-        return eventMapper.toEventDTO(receivedEvent);
+        return eventResponseMapper.toEventResponseDTO(receivedEvent);
     }
 
     @Override
-    public EventDTO addEvent(EventDTO eventDTO) {
-        Event event = eventMapper.toEvent(eventDTO);
+    public EventResponseDTO addEvent(EventRequestDTO eventRequestDTO) {
+        Event event = eventRequestMapper.toEvent(eventRequestDTO);
         Event addedEvent = eventService.addEvent(event);
-        return eventMapper.toEventDTO(addedEvent);
+        return eventResponseMapper.toEventResponseDTO(addedEvent);
     }
 
     @Override
@@ -44,9 +48,9 @@ public class EventFacadeImpl implements EventFacade {
     }
 
     @Override
-    public EventDTO updateEvent(Long eventId, EventDTO eventDTO) {
-        Event event = eventMapper.toEvent(eventDTO);
+    public EventResponseDTO updateEvent(Long eventId, EventRequestDTO eventRequestDTO) {
+        Event event = eventRequestMapper.toEvent(eventRequestDTO);
         Event updatedEvent = eventService.updateEvent(eventId, event);
-        return eventMapper.toEventDTO(updatedEvent);
+        return eventResponseMapper.toEventResponseDTO(updatedEvent);
     }
 }

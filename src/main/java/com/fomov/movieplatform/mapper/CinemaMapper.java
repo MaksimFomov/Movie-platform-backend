@@ -17,8 +17,8 @@ public interface CinemaMapper {
     @Mapping(target = "capacity", source = "cinemaDetails.capacity")
     CinemaDTO toCinemaDTO(Cinema cinema);
 
-    @Mapping(target = "cinemaDetails.address", source = "cinemaDTO.address")
-    @Mapping(target = "cinemaDetails.capacity", source = "cinemaDTO.capacity")
+    @Mapping(target = "cinemaDetails.address", source = "address")
+    @Mapping(target = "cinemaDetails.capacity", source = "capacity")
     Cinema toCinema(CinemaDTO cinemaDTO);
 
     @IterableMapping(elementTargetType = CinemaDTO.class)

@@ -1,6 +1,6 @@
 package com.fomov.movieplatform.mapper;
 
-import com.fomov.movieplatform.dto.OrderDTO;
+import com.fomov.movieplatform.dto.OrderRequestDTO;
 import com.fomov.movieplatform.model.Order;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
@@ -9,22 +9,22 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = EventMapper.class)
-public interface OrderMapper {
-    OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
+@Mapper(componentModel = "spring")
+public interface OrderRequestMapper {
+    OrderRequestMapper INSTANCE = Mappers.getMapper(OrderRequestMapper.class);
 
     @Mapping(target = "eventId", source = "event.id")
     @Mapping(target = "userId", source = "user.id")
-    OrderDTO toOrderDTO(Order order);
+    OrderRequestDTO toOrderRequestDTO(Order order);
 
     @Mapping(target = "event.id", source = "eventId")
     @Mapping(target = "user.id", source = "userId")
-    Order toOrder(OrderDTO orderDTO);
+    Order toOrder(OrderRequestDTO orderRequestDTO);
 
-    @IterableMapping(elementTargetType = OrderDTO.class)
-    List<OrderDTO> toOrderDTOs(List<Order> orders);
+    @IterableMapping(elementTargetType = OrderRequestDTO.class)
+    List<OrderRequestDTO> toOrderRequestDTOs(List<Order> orders);
 
     @IterableMapping(elementTargetType = Order.class)
-    List<Order> toOrders(List<OrderDTO> orderDTOs);
+    List<Order> toOrders(List<OrderRequestDTO> orderRequestDTOs);
 }
 

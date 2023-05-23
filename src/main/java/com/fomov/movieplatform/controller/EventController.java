@@ -1,6 +1,7 @@
 package com.fomov.movieplatform.controller;
 
-import com.fomov.movieplatform.dto.EventDTO;
+import com.fomov.movieplatform.dto.EventRequestDTO;
+import com.fomov.movieplatform.dto.EventResponseDTO;
 import com.fomov.movieplatform.exception.notfound.EventNotFoundException;
 import com.fomov.movieplatform.facade.EventFacade;
 import org.springframework.http.HttpStatus;
@@ -19,20 +20,20 @@ public class EventController {
     }
 
     @GetMapping
-    ResponseEntity<List<EventDTO>> getAllEvents() {
+    ResponseEntity<List<EventResponseDTO>> getAllEvents() {
         try {
-            List<EventDTO> eventDTOs = eventFacade.getAllEvents();
-            return ResponseEntity.ok(eventDTOs);
+            List<EventResponseDTO> eventResponseDTOS = eventFacade.getAllEvents();
+            return ResponseEntity.ok(eventResponseDTOS);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GetMapping("/{eventId}")
-    public ResponseEntity<EventDTO> getEventById(@PathVariable Long eventId) {
+    public ResponseEntity<EventResponseDTO> getEventById(@PathVariable Long eventId) {
         try {
-            EventDTO eventDTO = eventFacade.getEventById(eventId);
-            return ResponseEntity.ok(eventDTO);
+            EventResponseDTO eventResponseDTO = eventFacade.getEventById(eventId);
+            return ResponseEntity.ok(eventResponseDTO);
         } catch (EventNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (Exception e) {
@@ -41,9 +42,9 @@ public class EventController {
     }
 
     @PostMapping
-    ResponseEntity<EventDTO> addEvent(@RequestBody EventDTO eventDTO) {
+    ResponseEntity<EventResponseDTO> addEvent(@RequestBody EventRequestDTO eventRequestDTO) {
         try {
-            EventDTO addedEvent = eventFacade.addEvent(eventDTO);
+            EventResponseDTO addedEvent = eventFacade.addEvent(eventRequestDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(addedEvent);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -63,9 +64,9 @@ public class EventController {
     }
 
     @PutMapping("/{eventId}")
-    public ResponseEntity<EventDTO> updateEvent(@PathVariable Long eventId, @RequestBody EventDTO eventDTO) {
+    public ResponseEntity<EventResponseDTO> updateEvent(@PathVariable Long eventId, @RequestBody EventRequestDTO eventRequestDTO) {
         try {
-            EventDTO updatedEvent = eventFacade.updateEvent(eventId, eventDTO);
+            EventResponseDTO updatedEvent = eventFacade.updateEvent(eventId, eventRequestDTO);
             return ResponseEntity.ok(updatedEvent);
         } catch (EventNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

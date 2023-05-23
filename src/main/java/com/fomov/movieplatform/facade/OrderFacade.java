@@ -1,10 +1,10 @@
 package com.fomov.movieplatform.facade;
 
-import com.fomov.movieplatform.dto.OrderDTO;
+import com.fomov.movieplatform.dto.OrderResponseDTO;
 
 import java.util.List;
 
 public interface OrderFacade {
-    List<OrderDTO> getAllOrders();
-    OrderDTO getOrderById(Long orderId);
+    List<OrderResponseDTO> getAllOrders();
+    OrderResponseDTO getOrderById(Long orderId);
 }

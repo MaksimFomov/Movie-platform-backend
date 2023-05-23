@@ -1,7 +1,7 @@
 package com.fomov.movieplatform.controller;
 
 import com.fomov.movieplatform.dto.AuthenticationResponseDTO;
-import com.fomov.movieplatform.dto.OrderDTO;
+import com.fomov.movieplatform.dto.OrderRequestDTO;
 import com.fomov.movieplatform.dto.UserRequestDTO;
 import com.fomov.movieplatform.dto.UserResponseDTO;
 import com.fomov.movieplatform.exception.exists.UsernameExistsException;
@@ -83,9 +83,9 @@ public class UserController {
     }
 
     @PostMapping("/{userId}/orders")
-    ResponseEntity<String> addOrder(@PathVariable Long userId, @RequestBody OrderDTO orderDTO) {
+    ResponseEntity<String> addOrder(@PathVariable Long userId, @RequestBody OrderRequestDTO orderRequestDTO) {
         try {
-            userFacade.addOrder(userId, orderDTO);
+            userFacade.addOrder(userId, orderRequestDTO);
             return ResponseEntity.ok("Order added successfully");
         } catch (UserNotFoundException | EventNotFoundException | NoTicketsException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());

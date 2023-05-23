@@ -1,14 +1,15 @@
 package com.fomov.movieplatform.facade;
 
-import com.fomov.movieplatform.dto.EventDTO;
+import com.fomov.movieplatform.dto.EventRequestDTO;
+import com.fomov.movieplatform.dto.EventResponseDTO;
 
 import java.util.List;
 
 public interface EventFacade {
-    List<EventDTO> getAllEvents();
-    EventDTO getEventById(Long eventId);
+    List<EventResponseDTO> getAllEvents();
+    EventResponseDTO getEventById(Long eventId);
 
-    EventDTO addEvent(EventDTO eventDTO);
+    EventResponseDTO addEvent(EventRequestDTO eventRequestDTO);
     void deleteEvent(Long eventId);
-    EventDTO updateEvent(Long eventId, EventDTO eventDTO);
+    EventResponseDTO updateEvent(Long eventId, EventRequestDTO eventRequestDTO);
 }

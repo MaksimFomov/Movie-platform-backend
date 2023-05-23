@@ -1,11 +1,11 @@
 package com.fomov.movieplatform.facade.impl;
 
 import com.fomov.movieplatform.dto.AuthenticationResponseDTO;
-import com.fomov.movieplatform.dto.OrderDTO;
+import com.fomov.movieplatform.dto.OrderRequestDTO;
 import com.fomov.movieplatform.dto.UserRequestDTO;
 import com.fomov.movieplatform.dto.UserResponseDTO;
 import com.fomov.movieplatform.facade.UserFacade;
-import com.fomov.movieplatform.mapper.OrderMapper;
+import com.fomov.movieplatform.mapper.OrderRequestMapper;
 import com.fomov.movieplatform.mapper.UserRequestMapper;
 import com.fomov.movieplatform.mapper.UserResponseMapper;
 import com.fomov.movieplatform.model.Order;
@@ -20,13 +20,13 @@ public class UserFacadeImpl implements UserFacade {
     private final UserService userService;
     private final UserRequestMapper userRequestMapper;
     private final UserResponseMapper userResponseMapper;
-    private final OrderMapper orderMapper;
+    private final OrderRequestMapper orderRequestMapper;
 
-    public UserFacadeImpl(UserService userService, UserRequestMapper userRequestMapper, UserResponseMapper userResponseMapper, OrderMapper orderMapper) {
+    public UserFacadeImpl(UserService userService, UserRequestMapper userRequestMapper, UserResponseMapper userResponseMapper, OrderRequestMapper orderRequestMapper) {
         this.userService = userService;
         this.userRequestMapper = userRequestMapper;
         this.userResponseMapper = userResponseMapper;
-        this.orderMapper = orderMapper;
+        this.orderRequestMapper = orderRequestMapper;
     }
 
     @Override
@@ -61,8 +61,8 @@ public class UserFacadeImpl implements UserFacade {
     }
 
     @Override
-    public void addOrder(Long userId, OrderDTO orderDTO) {
-        Order order = orderMapper.toOrder(orderDTO);
+    public void addOrder(Long userId, OrderRequestDTO orderRequestDTO) {
+        Order order = orderRequestMapper.toOrder(orderRequestDTO);
         userService.addOrder(userId, order);
     }
 

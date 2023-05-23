@@ -1,8 +1,8 @@
 package com.fomov.movieplatform.facade.impl;
 
-import com.fomov.movieplatform.dto.OrderDTO;
+import com.fomov.movieplatform.dto.OrderResponseDTO;
 import com.fomov.movieplatform.facade.OrderFacade;
-import com.fomov.movieplatform.mapper.OrderMapper;
+import com.fomov.movieplatform.mapper.OrderResponseMapper;
 import com.fomov.movieplatform.model.Order;
 import com.fomov.movieplatform.service.OrderService;
 import org.springframework.stereotype.Service;
@@ -12,22 +12,22 @@ import java.util.List;
 @Service
 public class OrderFacadeImpl implements OrderFacade {
     private final OrderService orderService;
-    private final OrderMapper orderMapper;
+    private final OrderResponseMapper orderResponseMapper;
 
-    public OrderFacadeImpl(OrderService orderService, OrderMapper orderMapper) {
+    public OrderFacadeImpl(OrderService orderService, OrderResponseMapper orderResponseMapper) {
         this.orderService = orderService;
-        this.orderMapper = orderMapper;
+        this.orderResponseMapper = orderResponseMapper;
     }
 
     @Override
-    public List<OrderDTO> getAllOrders() {
+    public List<OrderResponseDTO> getAllOrders() {
         List<Order> receivedOrders = orderService.getAllOrders();
-        return orderMapper.toOrderDTOs(receivedOrders);
+        return orderResponseMapper.toOrderResponseDTOs(receivedOrders);
     }
 
     @Override
-    public OrderDTO getOrderById(Long orderId) {
+    public OrderResponseDTO getOrderById(Long orderId) {
         Order receivedOrder = orderService.getOrderById(orderId);
-        return orderMapper.toOrderDTO(receivedOrder);
+        return orderResponseMapper.toOrderResponseDTO(receivedOrder);
     }
 }

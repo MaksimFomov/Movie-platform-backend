@@ -1,7 +1,5 @@
 package com.fomov.movieplatform.dto;
 
-import java.util.Objects;
-
 public class MovieDTO {
     private Long id;
     private String name;
@@ -14,18 +12,6 @@ public class MovieDTO {
     private String genreName;
 
     public MovieDTO() {
-    }
-
-    public MovieDTO(Long id, String name, String description, String country, int year, String producer, int duration, int ageLimit, String genreName) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.country = country;
-        this.year = year;
-        this.producer = producer;
-        this.duration = duration;
-        this.ageLimit = ageLimit;
-        this.genreName = genreName;
     }
 
     public Long getId() {
@@ -98,19 +84,6 @@ public class MovieDTO {
 
     public void setGenreName(String genreName) {
         this.genreName = genreName;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MovieDTO movieDTO = (MovieDTO) o;
-        return year == movieDTO.year && duration == movieDTO.duration && ageLimit == movieDTO.ageLimit && Objects.equals(id, movieDTO.id) && Objects.equals(name, movieDTO.name) && Objects.equals(description, movieDTO.description) && Objects.equals(country, movieDTO.country) && Objects.equals(producer, movieDTO.producer) && Objects.equals(genreName, movieDTO.genreName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description, country, year, producer, duration, ageLimit, genreName);
     }
 }
 
