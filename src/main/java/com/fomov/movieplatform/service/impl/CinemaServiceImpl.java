@@ -30,7 +30,8 @@ public class CinemaServiceImpl implements CinemaService {
 
     @Override
     public Cinema getCinemaById(Long cinemaId) {
-        return cinemaRepository.findById(cinemaId).orElse(null);
+        return cinemaRepository.findById(cinemaId)
+                .orElseThrow(() -> new CinemaNotFoundException("Cinema not found with ID: " + cinemaId));
     }
 
     @Transactional
@@ -79,7 +80,8 @@ public class CinemaServiceImpl implements CinemaService {
     @Override
     public boolean isMovieAlreadyAdded(Long cinemaId, Long movieId) {
         Cinema cinema = getCinemaById(cinemaId);
-        Movie movie = movieRepository.findById(movieId).orElse(null);
+        Movie movie = movieRepository.findById(movieId)
+                .orElseThrow(() -> new MovieNotFoundException("Movie not found with ID: " + movieId));
         return cinema != null && movie != null && cinema.getMovies().contains(movie);
     }
 

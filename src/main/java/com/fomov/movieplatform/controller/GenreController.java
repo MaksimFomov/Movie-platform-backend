@@ -20,8 +20,12 @@ public class GenreController {
 
     @GetMapping
     ResponseEntity<List<GenreDTO>> getAllGenres() {
-        List<GenreDTO> genreDTOs = genreFacade.getAllGenres();
-        return ResponseEntity.ok(genreDTOs);
+        try {
+            List<GenreDTO> genreDTOs = genreFacade.getAllGenres();
+            return ResponseEntity.ok(genreDTOs);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/{genreId}")
@@ -30,14 +34,20 @@ public class GenreController {
             GenreDTO genreDTO = genreFacade.getGenreById(genreId);
             return ResponseEntity.ok(genreDTO);
         } catch (GenreNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PostMapping
     ResponseEntity<GenreDTO> addGenre(@RequestBody GenreDTO genreDTO) {
-        GenreDTO addedGenre = genreFacade.addGenre(genreDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(addedGenre);
+        try {
+            GenreDTO addedGenre = genreFacade.addGenre(genreDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(addedGenre);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DeleteMapping("/{genreId}")
@@ -47,6 +57,8 @@ public class GenreController {
             return ResponseEntity.ok("Genre successfully deleted.");
         } catch (GenreNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -56,7 +68,9 @@ public class GenreController {
             GenreDTO updatedGenre = genreFacade.updateGenre(genreId, genreDTO);
             return ResponseEntity.ok(updatedGenre);
         } catch (GenreNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

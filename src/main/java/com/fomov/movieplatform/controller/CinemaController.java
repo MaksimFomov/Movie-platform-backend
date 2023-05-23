@@ -21,8 +21,12 @@ public class CinemaController {
 
     @GetMapping
     ResponseEntity<List<CinemaDTO>> getAllCinemas() {
-        List<CinemaDTO> cinemaDTOs = cinemaFacade.getAllCinemas();
-        return ResponseEntity.ok(cinemaDTOs);
+        try {
+            List<CinemaDTO> cinemaDTOs = cinemaFacade.getAllCinemas();
+            return ResponseEntity.ok(cinemaDTOs);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/{cinemaId}")
@@ -31,14 +35,20 @@ public class CinemaController {
             CinemaDTO cinemaDTO = cinemaFacade.getCinemaById(cinemaId);
             return ResponseEntity.ok(cinemaDTO);
         } catch (CinemaNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PostMapping
     ResponseEntity<CinemaDTO> addCinema(@RequestBody CinemaDTO cinemaDTO) {
-        CinemaDTO addedCinema = cinemaFacade.addCinema(cinemaDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(addedCinema);
+        try {
+            CinemaDTO addedCinema = cinemaFacade.addCinema(cinemaDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(addedCinema);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DeleteMapping("/{cinemaId}")
@@ -48,6 +58,8 @@ public class CinemaController {
             return ResponseEntity.ok("Cinema successfully deleted.");
         } catch (CinemaNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -57,7 +69,9 @@ public class CinemaController {
             CinemaDTO updatedCinema = cinemaFacade.updateCinema(cinemaId, cinemaDTO);
             return ResponseEntity.ok(updatedCinema);
         } catch (CinemaNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -74,10 +88,10 @@ public class CinemaController {
             cinemaFacade.addMovieToCinema(cinemaId, movieId);
 
             return ResponseEntity.ok("Movie added to cinema successfully.");
-        } catch (CinemaNotFoundException e) {
+        } catch (CinemaNotFoundException | MovieNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (MovieNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -89,12 +103,12 @@ public class CinemaController {
         try {
             cinemaFacade.deleteMovieFromCinema(cinemaId, movieId);
             return ResponseEntity.ok("Movie successfully removed from cinema.");
-        } catch (CinemaNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (MovieNotFoundException e) {
+        } catch (CinemaNotFoundException | MovieNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }

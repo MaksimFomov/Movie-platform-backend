@@ -28,24 +28,32 @@ public class UserController {
             userFacade.registerUser(userRegistrationDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponseDTO> login(@RequestBody AuthenticationRequestDTO authenticationRequestDTO) {
-        String token = userFacade.loginUser(authenticationRequestDTO);
+        try {
+            String token = userFacade.loginUser(authenticationRequestDTO);
 
-        AuthenticationResponseDTO response = new AuthenticationResponseDTO();
-        response.setToken(token);
+            AuthenticationResponseDTO response = new AuthenticationResponseDTO();
+            response.setToken(token);
 
-        return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping
     ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<UserDTO> userDTOs = userFacade.getAllUsers();
-        return ResponseEntity.ok(userDTOs);
+        try {
+            List<UserDTO> userDTOs = userFacade.getAllUsers();
+            return ResponseEntity.ok(userDTOs);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/{userId}")
@@ -54,15 +62,23 @@ public class UserController {
             UserDTO userDTO = userFacade.getUserById(userId);
             return ResponseEntity.ok(userDTO);
         } catch (UserNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PutMapping("/{userId}")
     public ResponseEntity<String> updatePassword(@PathVariable Long userId, @RequestBody Map<String, String> newPasswordMap) {
-        String newPassword = newPasswordMap.get("password");
-        userFacade.updatePassword(userId, newPassword);
-        return ResponseEntity.ok("Password updated successfully");
+        try {
+            String newPassword = newPasswordMap.get("password");
+            userFacade.updatePassword(userId, newPassword);
+            return ResponseEntity.ok("Password updated successfully");
+        } catch (UserNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PostMapping("/{userId}/orders")
@@ -72,6 +88,8 @@ public class UserController {
             return ResponseEntity.ok("Order added successfully");
         } catch (UserNotFoundException | EventNotFoundException | NoTicketsException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
@@ -82,6 +100,8 @@ public class UserController {
             return ResponseEntity.ok("Order deleted successfully");
         } catch (UserNotFoundException | EventNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

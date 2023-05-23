@@ -20,8 +20,12 @@ public class MovieController {
 
     @GetMapping
     ResponseEntity<List<MovieDTO>> getAllMovies() {
-        List<MovieDTO> movieDTOs = movieFacade.getAllMovies();
-        return ResponseEntity.ok(movieDTOs);
+        try {
+            List<MovieDTO> movieDTOs = movieFacade.getAllMovies();
+            return ResponseEntity.ok(movieDTOs);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/{movieId}")
@@ -30,14 +34,20 @@ public class MovieController {
             MovieDTO movieDTO = movieFacade.getMovieById(movieId);
             return ResponseEntity.ok(movieDTO);
         } catch (MovieNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PostMapping
     ResponseEntity<MovieDTO> addMovie(@RequestBody MovieDTO movieDTO) {
-        MovieDTO addedMovie = movieFacade.addMovie(movieDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(addedMovie);
+        try {
+            MovieDTO addedMovie = movieFacade.addMovie(movieDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(addedMovie);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DeleteMapping("/{movieId}")
@@ -47,6 +57,8 @@ public class MovieController {
             return ResponseEntity.ok("Movie successfully deleted.");
         } catch (MovieNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -56,7 +68,9 @@ public class MovieController {
             MovieDTO updatedMovie = movieFacade.updateMovie(movieId, movieDTO);
             return ResponseEntity.ok(updatedMovie);
         } catch (MovieNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

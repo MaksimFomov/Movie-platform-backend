@@ -20,8 +20,12 @@ public class EventController {
 
     @GetMapping
     ResponseEntity<List<EventDTO>> getAllEvents() {
-        List<EventDTO> eventDTOs = eventFacade.getAllEvents();
-        return ResponseEntity.ok(eventDTOs);
+        try {
+            List<EventDTO> eventDTOs = eventFacade.getAllEvents();
+            return ResponseEntity.ok(eventDTOs);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/{eventId}")
@@ -30,14 +34,20 @@ public class EventController {
             EventDTO eventDTO = eventFacade.getEventById(eventId);
             return ResponseEntity.ok(eventDTO);
         } catch (EventNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PostMapping
     ResponseEntity<EventDTO> addEvent(@RequestBody EventDTO eventDTO) {
-        EventDTO addedEvent = eventFacade.addEvent(eventDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(addedEvent);
+        try {
+            EventDTO addedEvent = eventFacade.addEvent(eventDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(addedEvent);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @DeleteMapping("/{eventId}")
@@ -47,6 +57,8 @@ public class EventController {
             return ResponseEntity.ok("Event successfully deleted.");
         } catch (EventNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -56,7 +68,9 @@ public class EventController {
             EventDTO updatedEvent = eventFacade.updateEvent(eventId, eventDTO);
             return ResponseEntity.ok(updatedEvent);
         } catch (EventNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }

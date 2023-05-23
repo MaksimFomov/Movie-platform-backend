@@ -3,6 +3,7 @@ package com.fomov.movieplatform.controller;
 import com.fomov.movieplatform.dto.OrderDTO;
 import com.fomov.movieplatform.exception.notfound.OrderNotFoundException;
 import com.fomov.movieplatform.facade.OrderFacade;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,8 +23,12 @@ public class OrderController {
 
     @GetMapping
     ResponseEntity<List<OrderDTO>> getAllOrders() {
-        List<OrderDTO> orderDTOs = orderFacade.getAllOrders();
-        return ResponseEntity.ok(orderDTOs);
+        try {
+            List<OrderDTO> orderDTOs = orderFacade.getAllOrders();
+            return ResponseEntity.ok(orderDTOs);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/{orderId}")
@@ -32,7 +37,9 @@ public class OrderController {
             OrderDTO orderDTO = orderFacade.getOrderById(orderId);
             return ResponseEntity.ok(orderDTO);
         } catch (OrderNotFoundException e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }
