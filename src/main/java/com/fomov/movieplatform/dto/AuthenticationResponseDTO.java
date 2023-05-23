@@ -2,13 +2,13 @@ package com.fomov.movieplatform.dto;
 
 import java.util.Objects;
 
-public class AuthenticationResponse {
+public class AuthenticationResponseDTO {
     private String token;
 
-    public AuthenticationResponse() {
+    public AuthenticationResponseDTO() {
     }
 
-    public AuthenticationResponse(String token) {
+    public AuthenticationResponseDTO(String token) {
         this.token = token;
     }
 
@@ -24,7 +24,7 @@ public class AuthenticationResponse {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AuthenticationResponse that = (AuthenticationResponse) o;
+        AuthenticationResponseDTO that = (AuthenticationResponseDTO) o;
         return Objects.equals(token, that.token);
     }
 

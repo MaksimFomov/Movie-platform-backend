@@ -2,14 +2,14 @@ package com.fomov.movieplatform.dto;
 
 import java.util.Objects;
 
-public class AuthenticationRequest {
+public class AuthenticationRequestDTO {
     private String username;
     private String password;
 
-    public AuthenticationRequest() {
+    public AuthenticationRequestDTO() {
     }
 
-    public AuthenticationRequest(String username, String password) {
+    public AuthenticationRequestDTO(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -34,7 +34,7 @@ public class AuthenticationRequest {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AuthenticationRequest that = (AuthenticationRequest) o;
+        AuthenticationRequestDTO that = (AuthenticationRequestDTO) o;
         return Objects.equals(username, that.username) && Objects.equals(password, that.password);
     }
 
