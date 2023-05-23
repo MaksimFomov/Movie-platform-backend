@@ -26,11 +26,12 @@ public class MovieController {
 
     @GetMapping("/{movieId}")
     public ResponseEntity<MovieDTO> getMovieById(@PathVariable Long movieId) {
-        MovieDTO movieDTO = movieFacade.getMovieById(movieId);
-        if (movieDTO == null) {
+        try {
+            MovieDTO movieDTO = movieFacade.getMovieById(movieId);
+            return ResponseEntity.ok(movieDTO);
+        } catch (MovieNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(movieDTO);
     }
 
     @PostMapping

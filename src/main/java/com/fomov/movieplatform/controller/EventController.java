@@ -26,11 +26,12 @@ public class EventController {
 
     @GetMapping("/{eventId}")
     public ResponseEntity<EventDTO> getEventById(@PathVariable Long eventId) {
-        EventDTO eventDTO = eventFacade.getEventById(eventId);
-        if (eventDTO == null) {
+        try {
+            EventDTO eventDTO = eventFacade.getEventById(eventId);
+            return ResponseEntity.ok(eventDTO);
+        } catch (EventNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(eventDTO);
     }
 
     @PostMapping

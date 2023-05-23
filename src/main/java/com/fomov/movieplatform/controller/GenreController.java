@@ -26,11 +26,12 @@ public class GenreController {
 
     @GetMapping("/{genreId}")
     public ResponseEntity<GenreDTO> getGenreById(@PathVariable Long genreId) {
-        GenreDTO genreDTO = genreFacade.getGenreById(genreId);
-        if (genreDTO == null) {
+        try {
+            GenreDTO genreDTO = genreFacade.getGenreById(genreId);
+            return ResponseEntity.ok(genreDTO);
+        } catch (GenreNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(genreDTO);
     }
 
     @PostMapping
