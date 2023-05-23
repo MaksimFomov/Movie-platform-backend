@@ -1,7 +1,9 @@
 package com.fomov.movieplatform.controller;
 
 import com.fomov.movieplatform.dto.*;
+import com.fomov.movieplatform.exception.notfound.EventNotFoundException;
 import com.fomov.movieplatform.exception.notfound.UserNotFoundException;
+import com.fomov.movieplatform.exception.other.NoTicketsException;
 import com.fomov.movieplatform.facade.UserFacade;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,6 +63,26 @@ public class UserController {
         String newPassword = newPasswordMap.get("password");
         userFacade.updatePassword(userId, newPassword);
         return ResponseEntity.ok("Password updated successfully");
+    }
+
+    @PostMapping("/{userId}/orders")
+    ResponseEntity<String> addOrder(@PathVariable Long userId, @RequestBody OrderDTO orderDTO) {
+        try {
+            userFacade.addOrder(userId, orderDTO);
+            return ResponseEntity.ok("Order added successfully");
+        } catch (UserNotFoundException | EventNotFoundException | NoTicketsException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{userId}/orders/{orderId}")
+    public ResponseEntity<String> cancelOrder(@PathVariable Long userId, @PathVariable Long orderId) {
+        try {
+            userFacade.cancelOrder(userId, orderId);
+            return ResponseEntity.ok("Order deleted successfully");
+        } catch (UserNotFoundException | EventNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 }
 

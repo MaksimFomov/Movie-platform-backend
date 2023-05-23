@@ -11,10 +11,12 @@ import java.util.List;
 public interface OrderMapper {
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
-    @Mapping(target = "eventDTO", source = "event")
+    @Mapping(target = "eventId", source = "event.id")
+    @Mapping(target = "userId", source = "user.id")
     OrderDTO toOrderDTO(Order order);
 
-    @Mapping(target = "event", source = "eventDTO")
+    @Mapping(target = "event.id", source = "eventId")
+    @Mapping(target = "user.id", source = "userId")
     Order toOrder(OrderDTO orderDTO);
 
     @IterableMapping(elementTargetType = OrderDTO.class)

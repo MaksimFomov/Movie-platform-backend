@@ -24,17 +24,13 @@ public class Order {
     @JoinColumn(name = "event_id", nullable = false)
     private Event event;
 
-    @Column(name = "place", nullable = false)
-    private Integer place;
-
     public Order() {
     }
 
-    public Order(Long id, User user, Event event, Integer place) {
+    public Order(Long id, User user, Event event) {
         this.id = id;
         this.user = user;
         this.event = event;
-        this.place = place;
     }
 
     public Long getId() {
@@ -61,24 +57,16 @@ public class Order {
         this.event = event;
     }
 
-    public Integer getPlace() {
-        return place;
-    }
-
-    public void setPlace(Integer place) {
-        this.place = place;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) && Objects.equals(user, order.user) && Objects.equals(event, order.event) && Objects.equals(place, order.place);
+        return Objects.equals(id, order.id) && Objects.equals(user, order.user) && Objects.equals(event, order.event);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, event, place);
+        return Objects.hash(id, user, event);
     }
 }

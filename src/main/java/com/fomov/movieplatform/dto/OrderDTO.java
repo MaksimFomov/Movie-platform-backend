@@ -4,17 +4,15 @@ import java.util.Objects;
 
 public class OrderDTO {
     private Long id;
-    private EventDTO eventDTO;
-    private Integer place;
+    private Long eventId;
     private Long userId;
 
     public OrderDTO() {
     }
 
-    public OrderDTO(Long id, EventDTO eventDTO, Integer place, Long userId) {
+    public OrderDTO(Long id, Long eventId, Long userId) {
         this.id = id;
-        this.eventDTO = eventDTO;
-        this.place = place;
+        this.eventId = eventId;
         this.userId = userId;
     }
 
@@ -26,20 +24,12 @@ public class OrderDTO {
         this.id = id;
     }
 
-    public EventDTO getEventDTO() {
-        return eventDTO;
+    public Long getEventId() {
+        return eventId;
     }
 
-    public void setEventDTO(EventDTO eventDTO) {
-        this.eventDTO = eventDTO;
-    }
-
-    public Integer getPlace() {
-        return place;
-    }
-
-    public void setPlace(Integer place) {
-        this.place = place;
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
     }
 
     public Long getUserId() {
@@ -55,12 +45,12 @@ public class OrderDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderDTO orderDTO = (OrderDTO) o;
-        return Objects.equals(id, orderDTO.id) && Objects.equals(eventDTO, orderDTO.eventDTO) && Objects.equals(place, orderDTO.place) && Objects.equals(userId, orderDTO.userId);
+        return Objects.equals(id, orderDTO.id) && Objects.equals(eventId, orderDTO.eventId) && Objects.equals(userId, orderDTO.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, eventDTO, place, userId);
+        return Objects.hash(id, eventId, userId);
     }
 }
 
