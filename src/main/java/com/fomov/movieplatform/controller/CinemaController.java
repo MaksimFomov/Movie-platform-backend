@@ -41,7 +41,7 @@ public class CinemaController {
         }
     }
 
-    @PostMapping
+    @PostMapping()
     ResponseEntity<?> addCinema(@RequestBody CinemaDTO cinemaDTO) {
         try {
             CinemaDTO addedCinema = cinemaFacade.addCinema(cinemaDTO);

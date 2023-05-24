@@ -2,6 +2,7 @@ package com.fomov.movieplatform.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -34,8 +35,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/users/register").permitAll()
                 .antMatchers("/api/users/login").permitAll()
-                .antMatchers("/api/admin/**").hasRole("admin")
-                .antMatchers("/api/user/**").hasAnyRole("admin", "user")
+                .antMatchers("/api/users/{userId}/orders").hasRole("user")
+                .antMatchers("/api/users/{userId}/orders/{orderId}").hasRole("user")
+                .antMatchers(HttpMethod.POST, "/api/**").hasRole("admin")
+                .antMatchers(HttpMethod.PUT, "/api/**").hasRole("admin")
+                .antMatchers(HttpMethod.DELETE, "/api/**").hasRole("admin")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
