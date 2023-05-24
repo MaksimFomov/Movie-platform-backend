@@ -1,6 +1,7 @@
 package com.fomov.movieplatform.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,6 +25,9 @@ public class Event {
     @JoinColumn(name = "cinema_id", nullable = false)
     private Cinema cinema;
 
+    @Column(name = "eventDateTime", nullable = false)
+    private LocalDateTime eventDateTime;
+
     @Column(name = "price", nullable = false)
     private Double price;
 
@@ -39,10 +43,11 @@ public class Event {
     public Event() {
     }
 
-    public Event(Long id, Movie movie, Cinema cinema, Double price, Integer numberOfTickets, List<Order> orders) {
+    public Event(Long id, Movie movie, Cinema cinema, LocalDateTime eventDateTime, Double price, Integer numberOfTickets, List<Order> orders) {
         this.id = id;
         this.movie = movie;
         this.cinema = cinema;
+        this.eventDateTime = eventDateTime;
         this.price = price;
         this.numberOfTickets = numberOfTickets;
         this.orders = orders;
@@ -70,6 +75,14 @@ public class Event {
 
     public void setCinema(Cinema cinema) {
         this.cinema = cinema;
+    }
+
+    public LocalDateTime getEventDateTime() {
+        return eventDateTime;
+    }
+
+    public void setEventDateTime(LocalDateTime eventDateTime) {
+        this.eventDateTime = eventDateTime;
     }
 
     public Double getPrice() {
@@ -101,11 +114,11 @@ public class Event {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Event event = (Event) o;
-        return Objects.equals(id, event.id) && Objects.equals(movie, event.movie) && Objects.equals(cinema, event.cinema) && Objects.equals(price, event.price) && Objects.equals(numberOfTickets, event.numberOfTickets) && Objects.equals(orders, event.orders);
+        return Objects.equals(id, event.id) && Objects.equals(movie, event.movie) && Objects.equals(cinema, event.cinema) && Objects.equals(eventDateTime, event.eventDateTime) && Objects.equals(price, event.price) && Objects.equals(numberOfTickets, event.numberOfTickets) && Objects.equals(orders, event.orders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, movie, cinema, price, numberOfTickets, orders);
+        return Objects.hash(id, movie, cinema, eventDateTime, price, numberOfTickets, orders);
     }
 }

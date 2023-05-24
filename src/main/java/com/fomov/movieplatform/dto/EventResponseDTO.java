@@ -1,9 +1,12 @@
 package com.fomov.movieplatform.dto;
 
+import java.time.LocalDateTime;
+
 public class EventResponseDTO {
     private long id;
     private MovieDTO movie;
     private CinemaDTO cinema;
+    private LocalDateTime eventDateTime;
     private double price;
     private int numberOfTickets;
 
@@ -32,6 +35,14 @@ public class EventResponseDTO {
 
     public void setCinema(CinemaDTO cinema) {
         this.cinema = cinema;
+    }
+
+    public LocalDateTime getEventDateTime() {
+        return eventDateTime;
+    }
+
+    public void setEventDateTime(LocalDateTime eventDateTime) {
+        this.eventDateTime = eventDateTime;
     }
 
     public double getPrice() {
