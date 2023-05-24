@@ -13,10 +13,10 @@ import java.util.List;
 public interface UserResponseMapper {
     UserResponseMapper INSTANCE = Mappers.getMapper(UserResponseMapper.class);
 
-    @Mapping(target = "orderDTOs", source = "orders")
+    @Mapping(target = "orders", source = "orders")
     UserResponseDTO toUserResponseDTO(User user);
 
-    @Mapping(target = "orders", source = "orderDTOs")
+    @Mapping(target = "orders", source = "orders")
     User toUser(UserResponseDTO userResponseDTO);
 
     @IterableMapping(elementTargetType = UserResponseDTO.class)

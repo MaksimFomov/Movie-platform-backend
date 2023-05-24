@@ -1,27 +1,27 @@
 package com.fomov.movieplatform.dto;
 
 public class EventRequestDTO {
-    private Long movieId;
-    private Long cinemaId;
+    private long movieId;
+    private long cinemaId;
     private double price;
     private int numberOfTickets;
 
     public EventRequestDTO() {
     }
 
-    public Long getMovieId() {
+    public long getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(Long movieId) {
+    public void setMovieId(long movieId) {
         this.movieId = movieId;
     }
 
-    public Long getCinemaId() {
+    public long getCinemaId() {
         return cinemaId;
     }
 
-    public void setCinemaId(Long cinemaId) {
+    public void setCinemaId(long cinemaId) {
         this.cinemaId = cinemaId;
     }
 

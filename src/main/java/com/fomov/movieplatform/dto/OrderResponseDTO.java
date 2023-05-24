@@ -1,34 +1,34 @@
 package com.fomov.movieplatform.dto;
 
 public class OrderResponseDTO {
-    private Long id;
-    private UserResponseDTO userResponseDTO;
-    private EventResponseDTO eventResponseDTO;
+    private long id;
+    private UserResponseDTO user;
+    private EventResponseDTO event;
 
     public OrderResponseDTO() {
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public UserResponseDTO getUserResponseDTO() {
-        return userResponseDTO;
+    public UserResponseDTO getUser() {
+        return user;
     }
 
-    public void setUserResponseDTO(UserResponseDTO userResponseDTO) {
-        this.userResponseDTO = userResponseDTO;
+    public void setUser(UserResponseDTO user) {
+        this.user = user;
     }
 
-    public EventResponseDTO getEventResponseDTO() {
-        return eventResponseDTO;
+    public EventResponseDTO getEvent() {
+        return event;
     }
 
-    public void setEventResponseDTO(EventResponseDTO eventResponseDTO) {
-        this.eventResponseDTO = eventResponseDTO;
+    public void setEvent(EventResponseDTO event) {
+        this.event = event;
     }
 }

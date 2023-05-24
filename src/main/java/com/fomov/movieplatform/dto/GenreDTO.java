@@ -1,17 +1,20 @@
 package com.fomov.movieplatform.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class GenreDTO {
-    private Long id;
+    private long id;
     private String name;
 
     public GenreDTO() {
     }
 
-    public Long getId() {
+    @JsonIgnore
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

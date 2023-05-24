@@ -13,12 +13,12 @@ import java.util.List;
 public interface EventResponseMapper {
     EventResponseMapper INSTANCE = Mappers.getMapper(EventResponseMapper.class);
 
-    @Mapping(target = "movieDTO", source = "movie")
-    @Mapping(target = "cinemaDTO", source = "cinema")
+    @Mapping(target = "movie", source = "movie")
+    @Mapping(target = "cinema", source = "cinema")
     EventResponseDTO toEventResponseDTO(Event event);
 
-    @Mapping(target = "movie", source = "movieDTO")
-    @Mapping(target = "cinema", source = "cinemaDTO")
+    @Mapping(target = "movie", source = "movie")
+    @Mapping(target = "cinema", source = "cinema")
     Event toEvent(EventResponseDTO eventResponseDTO);
 
     @IterableMapping(elementTargetType = EventResponseDTO.class)

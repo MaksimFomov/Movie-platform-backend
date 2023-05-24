@@ -1,7 +1,9 @@
 package com.fomov.movieplatform.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class CinemaDTO {
-    private Long id;
+    private long id;
     private String name;
     private String address;
     private int capacity;
@@ -9,11 +11,12 @@ public class CinemaDTO {
     public CinemaDTO() {
     }
 
-    public Long getId() {
+    @JsonIgnore
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

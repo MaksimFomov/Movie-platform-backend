@@ -1,7 +1,9 @@
 package com.fomov.movieplatform.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class MovieDTO {
-    private Long id;
+    private long id;
     private String name;
     private String description;
     private String country;
@@ -14,11 +16,12 @@ public class MovieDTO {
     public MovieDTO() {
     }
 
-    public Long getId() {
+    @JsonIgnore
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

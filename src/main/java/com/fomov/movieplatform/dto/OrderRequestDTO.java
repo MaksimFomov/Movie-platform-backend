@@ -1,34 +1,25 @@
 package com.fomov.movieplatform.dto;
 
 public class OrderRequestDTO {
-    private Long id;
-    private Long eventId;
-    private Long userId;
+    private long eventId;
+    private long userId;
 
     public OrderRequestDTO() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getEventId() {
+    public long getEventId() {
         return eventId;
     }
 
-    public void setEventId(Long eventId) {
+    public void setEventId(long eventId) {
         this.eventId = eventId;
     }
 
-    public Long getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 }

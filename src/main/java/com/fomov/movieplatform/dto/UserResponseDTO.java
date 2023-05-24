@@ -3,11 +3,20 @@ package com.fomov.movieplatform.dto;
 import java.util.List;
 
 public class UserResponseDTO {
+    private long id;
     private String username;
     private String role;
-    private List<OrderRequestDTO> orderRequestDTOS;
+    private List<OrderRequestDTO> orders;
 
     public UserResponseDTO() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -26,12 +35,12 @@ public class UserResponseDTO {
         this.role = role;
     }
 
-    public List<OrderRequestDTO> getOrderDTOs() {
-        return orderRequestDTOS;
+    public List<OrderRequestDTO> getOrders() {
+        return orders;
     }
 
-    public void setOrderDTOs(List<OrderRequestDTO> orderRequestDTOS) {
-        this.orderRequestDTOS = orderRequestDTOS;
+    public void setOrders(List<OrderRequestDTO> orders) {
+        this.orders = orders;
     }
 }
 
