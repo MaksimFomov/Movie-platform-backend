@@ -11,4 +11,9 @@ public interface EventService {
     Event addEvent(Event event);
     void deleteEvent(Long eventId);
     Event updateEvent(Long eventId, Event event);
+
+    List<Event> getAllEventsSortedByDate();
+    List<Event> getEventsByCinema(Long cinemaId);
+    List<Event> getEventsByMovie(Long movieId);
+    List<Event> getEventsByGenre(String genreName);
 }

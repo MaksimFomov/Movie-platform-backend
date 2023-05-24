@@ -53,4 +53,28 @@ public class EventFacadeImpl implements EventFacade {
         Event updatedEvent = eventService.updateEvent(eventId, event);
         return eventResponseMapper.toEventResponseDTO(updatedEvent);
     }
+
+    @Override
+    public List<EventResponseDTO> getAllEventsSortedByDate() {
+        List<Event> receivedEvents = eventService.getAllEventsSortedByDate();
+        return eventResponseMapper.toEventResponseDTOs(receivedEvents);
+    }
+
+    @Override
+    public List<EventResponseDTO> getEventsByCinema(Long cinemaId) {
+        List<Event> receivedEvents = eventService.getEventsByCinema(cinemaId);
+        return eventResponseMapper.toEventResponseDTOs(receivedEvents);
+    }
+
+    @Override
+    public List<EventResponseDTO> getEventsByMovie(Long movieId) {
+        List<Event> receivedEvents = eventService.getEventsByMovie(movieId);
+        return eventResponseMapper.toEventResponseDTOs(receivedEvents);
+    }
+
+    @Override
+    public List<EventResponseDTO> getEventsByGenre(String genreName) {
+        List<Event> receivedEvents = eventService.getEventsByGenre(genreName);
+        return eventResponseMapper.toEventResponseDTOs(receivedEvents);
+    }
 }

@@ -1,12 +1,16 @@
 package com.fomov.movieplatform.service.impl;
 
+import com.fomov.movieplatform.exception.notfound.CinemaNotFoundException;
 import com.fomov.movieplatform.exception.notfound.EventNotFoundException;
+import com.fomov.movieplatform.exception.notfound.GenreNotFoundException;
+import com.fomov.movieplatform.exception.notfound.MovieNotFoundException;
 import com.fomov.movieplatform.model.Event;
 import com.fomov.movieplatform.repository.EventRepository;
 import com.fomov.movieplatform.service.EventService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -56,5 +60,30 @@ public class EventServiceImpl implements EventService {
         updatedEvent.setOrders(event.getOrders());
 
         return eventRepository.save(updatedEvent);
+    }
+
+    @Override
+    public List<Event> getAllEventsSortedByDate() {
+        List<Event> events = eventRepository.findAll();
+        events.sort(Comparator.comparing(Event::getEventDateTime));
+        return events;
+    }
+
+    @Override
+    public List<Event> getEventsByCinema(Long cinemaId) {
+        return eventRepository.findAllByCinemaId(cinemaId)
+                .orElseThrow(() -> new CinemaNotFoundException("Cinema not found with ID: " + cinemaId));
+    }
+
+    @Override
+    public List<Event> getEventsByMovie(Long movieId) {
+        return eventRepository.findAllByMovieId(movieId)
+                .orElseThrow(() -> new MovieNotFoundException("Movie not found with ID: " + movieId));
+    }
+
+    @Override
+    public List<Event> getEventsByGenre(String genreName) {
+        return eventRepository.findAllByMovieGenre_Name(genreName)
+                .orElseThrow(() -> new GenreNotFoundException("Genre not found with name: " + genreName));
     }
 }
