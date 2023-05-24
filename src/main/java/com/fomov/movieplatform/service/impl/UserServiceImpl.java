@@ -3,6 +3,7 @@ package com.fomov.movieplatform.service.impl;
 import com.fomov.movieplatform.exception.exists.UsernameExistsException;
 import com.fomov.movieplatform.exception.notfound.EventNotFoundException;
 import com.fomov.movieplatform.exception.notfound.UserNotFoundException;
+import com.fomov.movieplatform.exception.other.InvalidLoginCredentialsException;
 import com.fomov.movieplatform.exception.other.NoTicketsException;
 import com.fomov.movieplatform.model.Event;
 import com.fomov.movieplatform.model.Order;
@@ -12,6 +13,7 @@ import com.fomov.movieplatform.repository.UserRepository;
 import com.fomov.movieplatform.security.JwtTokenUtil;
 import com.fomov.movieplatform.service.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -52,15 +54,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String loginUser(User user) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        user.getUsername(),
-                        user.getPassword()
-                )
-        );
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            user.getUsername(),
+                            user.getPassword()
+                    )
+            );
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return jwtTokenUtil.generateToken((UserDetails) authentication.getPrincipal());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return jwtTokenUtil.generateToken((UserDetails) authentication.getPrincipal());
+        } catch (BadCredentialsException e) {
+            throw new InvalidLoginCredentialsException("Invalid login credentials");
+        }
     }
 
     @Override

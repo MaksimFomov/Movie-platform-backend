@@ -20,34 +20,34 @@ public class CinemaController {
     }
 
     @GetMapping
-    ResponseEntity<List<CinemaDTO>> getAllCinemas() {
+    ResponseEntity<?> getAllCinemas() {
         try {
             List<CinemaDTO> cinemaDTOs = cinemaFacade.getAllCinemas();
             return ResponseEntity.ok(cinemaDTOs);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @GetMapping("/{cinemaId}")
-    public ResponseEntity<CinemaDTO> getCinemaById(@PathVariable Long cinemaId) {
+    public ResponseEntity<?> getCinemaById(@PathVariable Long cinemaId) {
         try {
             CinemaDTO cinemaDTO = cinemaFacade.getCinemaById(cinemaId);
             return ResponseEntity.ok(cinemaDTO);
         } catch (CinemaNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @PostMapping
-    ResponseEntity<CinemaDTO> addCinema(@RequestBody CinemaDTO cinemaDTO) {
+    ResponseEntity<?> addCinema(@RequestBody CinemaDTO cinemaDTO) {
         try {
             CinemaDTO addedCinema = cinemaFacade.addCinema(cinemaDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(addedCinema);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -64,14 +64,14 @@ public class CinemaController {
     }
 
     @PutMapping("/{cinemaId}")
-    public ResponseEntity<CinemaDTO> updateCinema(@PathVariable Long cinemaId, @RequestBody CinemaDTO cinemaDTO) {
+    public ResponseEntity<?> updateCinema(@PathVariable Long cinemaId, @RequestBody CinemaDTO cinemaDTO) {
         try {
             CinemaDTO updatedCinema = cinemaFacade.updateCinema(cinemaId, cinemaDTO);
             return ResponseEntity.ok(updatedCinema);
         } catch (CinemaNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 

@@ -20,34 +20,34 @@ public class EventController {
     }
 
     @GetMapping
-    ResponseEntity<List<EventResponseDTO>> getAllEvents() {
+    ResponseEntity<?> getAllEvents() {
         try {
             List<EventResponseDTO> eventResponseDTOS = eventFacade.getAllEvents();
             return ResponseEntity.ok(eventResponseDTOS);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @GetMapping("/{eventId}")
-    public ResponseEntity<EventResponseDTO> getEventById(@PathVariable Long eventId) {
+    public ResponseEntity<?> getEventById(@PathVariable Long eventId) {
         try {
             EventResponseDTO eventResponseDTO = eventFacade.getEventById(eventId);
             return ResponseEntity.ok(eventResponseDTO);
         } catch (EventNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @PostMapping
-    ResponseEntity<EventResponseDTO> addEvent(@RequestBody EventRequestDTO eventRequestDTO) {
+    ResponseEntity<?> addEvent(@RequestBody EventRequestDTO eventRequestDTO) {
         try {
             EventResponseDTO addedEvent = eventFacade.addEvent(eventRequestDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(addedEvent);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -64,14 +64,14 @@ public class EventController {
     }
 
     @PutMapping("/{eventId}")
-    public ResponseEntity<EventResponseDTO> updateEvent(@PathVariable Long eventId, @RequestBody EventRequestDTO eventRequestDTO) {
+    public ResponseEntity<?> updateEvent(@PathVariable Long eventId, @RequestBody EventRequestDTO eventRequestDTO) {
         try {
             EventResponseDTO updatedEvent = eventFacade.updateEvent(eventId, eventRequestDTO);
             return ResponseEntity.ok(updatedEvent);
         } catch (EventNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }

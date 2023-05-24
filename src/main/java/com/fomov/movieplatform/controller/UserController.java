@@ -7,6 +7,7 @@ import com.fomov.movieplatform.dto.UserResponseDTO;
 import com.fomov.movieplatform.exception.exists.UsernameExistsException;
 import com.fomov.movieplatform.exception.notfound.EventNotFoundException;
 import com.fomov.movieplatform.exception.notfound.UserNotFoundException;
+import com.fomov.movieplatform.exception.other.InvalidLoginCredentialsException;
 import com.fomov.movieplatform.exception.other.NoTicketsException;
 import com.fomov.movieplatform.facade.UserFacade;
 import org.springframework.http.HttpStatus;
@@ -33,39 +34,41 @@ public class UserController {
         } catch (UsernameExistsException e) {
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }  catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponseDTO> login(@RequestBody UserRequestDTO userRequestDTO) {
+    public ResponseEntity<?> login(@RequestBody UserRequestDTO userRequestDTO) {
         try {
             AuthenticationResponseDTO response = userFacade.loginUser(userRequestDTO);
             return ResponseEntity.ok(response);
+        } catch (InvalidLoginCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @GetMapping
-    ResponseEntity<List<UserResponseDTO>> getAllUsers() {
+    ResponseEntity<?> getAllUsers() {
         try {
             List<UserResponseDTO> userResponseDTOS = userFacade.getAllUsers();
             return ResponseEntity.ok(userResponseDTOS);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long userId) {
+    public ResponseEntity<?> getUserById(@PathVariable Long userId) {
         try {
             UserResponseDTO userResponseDTO = userFacade.getUserById(userId);
             return ResponseEntity.ok(userResponseDTO);
         } catch (UserNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -76,9 +79,9 @@ public class UserController {
             userFacade.updatePassword(userId, newPassword);
             return ResponseEntity.ok("Password updated successfully");
         } catch (UserNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -90,7 +93,7 @@ public class UserController {
         } catch (UserNotFoundException | EventNotFoundException | NoTicketsException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -102,7 +105,7 @@ public class UserController {
         } catch (UserNotFoundException | EventNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }

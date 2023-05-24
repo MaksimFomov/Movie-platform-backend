@@ -19,34 +19,34 @@ public class MovieController {
     }
 
     @GetMapping
-    ResponseEntity<List<MovieDTO>> getAllMovies() {
+    ResponseEntity<?> getAllMovies() {
         try {
             List<MovieDTO> movieDTOs = movieFacade.getAllMovies();
             return ResponseEntity.ok(movieDTOs);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @GetMapping("/{movieId}")
-    public ResponseEntity<MovieDTO> getMovieById(@PathVariable Long movieId) {
+    public ResponseEntity<?> getMovieById(@PathVariable Long movieId) {
         try {
             MovieDTO movieDTO = movieFacade.getMovieById(movieId);
             return ResponseEntity.ok(movieDTO);
         } catch (MovieNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @PostMapping
-    ResponseEntity<MovieDTO> addMovie(@RequestBody MovieDTO movieDTO) {
+    ResponseEntity<?> addMovie(@RequestBody MovieDTO movieDTO) {
         try {
             MovieDTO addedMovie = movieFacade.addMovie(movieDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(addedMovie);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -63,14 +63,14 @@ public class MovieController {
     }
 
     @PutMapping("/{movieId}")
-    public ResponseEntity<MovieDTO> updateMovie(@PathVariable Long movieId, @RequestBody MovieDTO movieDTO) {
+    public ResponseEntity<?> updateMovie(@PathVariable Long movieId, @RequestBody MovieDTO movieDTO) {
         try {
             MovieDTO updatedMovie = movieFacade.updateMovie(movieId, movieDTO);
             return ResponseEntity.ok(updatedMovie);
         } catch (MovieNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }

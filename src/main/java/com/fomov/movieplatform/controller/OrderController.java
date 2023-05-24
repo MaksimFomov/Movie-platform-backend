@@ -22,24 +22,24 @@ public class OrderController {
     }
 
     @GetMapping
-    ResponseEntity<List<OrderResponseDTO>> getAllOrders() {
+    ResponseEntity<?> getAllOrders() {
         try {
             List<OrderResponseDTO> orderResponseDTOs = orderFacade.getAllOrders();
             return ResponseEntity.ok(orderResponseDTOs);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<OrderResponseDTO> getOrderById(@PathVariable Long orderId) {
+    public ResponseEntity<?> getOrderById(@PathVariable Long orderId) {
         try {
             OrderResponseDTO orderResponseDTO = orderFacade.getOrderById(orderId);
             return ResponseEntity.ok(orderResponseDTO);
         } catch (OrderNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }

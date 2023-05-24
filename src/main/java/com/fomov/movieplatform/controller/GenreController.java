@@ -19,34 +19,34 @@ public class GenreController {
     }
 
     @GetMapping
-    ResponseEntity<List<GenreDTO>> getAllGenres() {
+    ResponseEntity<?> getAllGenres() {
         try {
             List<GenreDTO> genreDTOs = genreFacade.getAllGenres();
             return ResponseEntity.ok(genreDTOs);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @GetMapping("/{genreId}")
-    public ResponseEntity<GenreDTO> getGenreById(@PathVariable Long genreId) {
+    public ResponseEntity<?> getGenreById(@PathVariable Long genreId) {
         try {
             GenreDTO genreDTO = genreFacade.getGenreById(genreId);
             return ResponseEntity.ok(genreDTO);
         } catch (GenreNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @PostMapping
-    ResponseEntity<GenreDTO> addGenre(@RequestBody GenreDTO genreDTO) {
+    ResponseEntity<?> addGenre(@RequestBody GenreDTO genreDTO) {
         try {
             GenreDTO addedGenre = genreFacade.addGenre(genreDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(addedGenre);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
@@ -63,14 +63,14 @@ public class GenreController {
     }
 
     @PutMapping("/{genreId}")
-    public ResponseEntity<GenreDTO> updateGenre(@PathVariable Long genreId, @RequestBody GenreDTO genreDTO) {
+    public ResponseEntity<?> updateGenre(@PathVariable Long genreId, @RequestBody GenreDTO genreDTO) {
         try {
             GenreDTO updatedGenre = genreFacade.updateGenre(genreId, genreDTO);
             return ResponseEntity.ok(updatedGenre);
         } catch (GenreNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 }
