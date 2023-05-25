@@ -2,7 +2,6 @@ package com.fomov.movieplatform.facade;
 
 import com.fomov.movieplatform.dto.EventRequestDTO;
 import com.fomov.movieplatform.dto.EventResponseDTO;
-import com.fomov.movieplatform.model.Event;
 
 import java.util.List;
 

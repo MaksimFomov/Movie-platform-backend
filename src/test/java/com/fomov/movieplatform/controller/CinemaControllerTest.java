@@ -4,59 +4,76 @@ import com.fomov.movieplatform.dto.CinemaDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
+
 import static io.restassured.RestAssured.given;
 
 public class CinemaControllerTest {
+    private static final String BASE_URL = "http://localhost:8080/api/cinemas";
+    private static final String USER_USERNAME = "user";
+    private static final String USER_PASSWORD = "user";
+    private static final String ADMIN_USERNAME = "admin";
+    private static final String ADMIN_PASSWORD = "admin";
 
     @Test
-    @WithMockUser(roles = "user")
     public void testGetAllCinemasAsUser() {
         given()
+                .auth().basic(USER_USERNAME, USER_PASSWORD)
                 .when()
-                .get("http://localhost:8080/api/cinemas")
+                .get(BASE_URL)
                 .then()
                 .statusCode(HttpStatus.OK.value());
     }
 
     @Test
-    @WithMockUser(roles = "admin")
     public void testGetAllCinemasAsAdmin() {
         given()
+                .auth().basic(ADMIN_USERNAME, ADMIN_PASSWORD)
                 .when()
-                .get("http://localhost:8080/api/cinemas")
+                .get(BASE_URL)
                 .then()
                 .statusCode(HttpStatus.OK.value());
     }
 
     @Test
-    @WithMockUser(roles = "user")
     public void testGetCinemaByIdAsUser() {
-        long cinemaId = 1; // Replace with an existing cinema ID
+        long cinemaId = 1;
 
         given()
+                .auth().basic(USER_USERNAME, USER_PASSWORD)
                 .pathParam("cinemaId", cinemaId)
                 .when()
-                .get("http://localhost:8080/api/cinemas/{cinemaId}")
+                .get(BASE_URL + "/{cinemaId}")
                 .then()
                 .statusCode(HttpStatus.OK.value());
     }
 
     @Test
-    @WithMockUser(roles = "admin")
     public void testGetCinemaByIdAsAdmin() {
-        long cinemaId = 1; // Replace with an existing cinema ID
+        long cinemaId = 1;
 
         given()
+                .auth().basic(ADMIN_USERNAME, ADMIN_PASSWORD)
                 .pathParam("cinemaId", cinemaId)
                 .when()
-                .get("http://localhost:8080/api/cinemas/{cinemaId}")
+                .get(BASE_URL + "/{cinemaId}")
                 .then()
                 .statusCode(HttpStatus.OK.value());
     }
 
     @Test
-    @WithMockUser(roles = "user")
+    public void testGetCinemaByIdNotFound() {
+        long cinemaId = 999;
+
+        given()
+                .auth().basic(USER_USERNAME, USER_PASSWORD)
+                .pathParam("cinemaId", cinemaId)
+                .when()
+                .get(BASE_URL + "/{cinemaId}")
+                .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
     public void testAddCinemaAsUser() {
         CinemaDTO cinema = new CinemaDTO();
         cinema.setName("New Cinema");
@@ -64,16 +81,16 @@ public class CinemaControllerTest {
         cinema.setCapacity(100);
 
         given()
+                .auth().basic(USER_USERNAME, USER_PASSWORD)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(cinema)
                 .when()
-                .post("http://localhost:8080/api/cinemas")
+                .post(BASE_URL)
                 .then()
                 .statusCode(HttpStatus.FORBIDDEN.value());
     }
 
     @Test
-    @WithMockUser(roles = "admin")
     public void testAddCinemaAsAdmin() {
         CinemaDTO cinema = new CinemaDTO();
         cinema.setName("New Cinema");
@@ -81,44 +98,18 @@ public class CinemaControllerTest {
         cinema.setCapacity(100);
 
         given()
+                .auth().basic(ADMIN_USERNAME, ADMIN_PASSWORD)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(cinema)
                 .when()
-                .post("http://localhost:8080/api/cinemas")
+                .post(BASE_URL)
                 .then()
                 .statusCode(HttpStatus.CREATED.value());
     }
 
     @Test
-    @WithMockUser(roles = "user")
-    public void testDeleteCinemaAsUser() {
-        long cinemaId = 1; // Replace with an existing cinema ID
-
-        given()
-                .pathParam("cinemaId", cinemaId)
-                .when()
-                .delete("http://localhost:8080/api/cinemas/{cinemaId}")
-                .then()
-                .statusCode(HttpStatus.FORBIDDEN.value());
-    }
-
-    @Test
-    @WithMockUser(roles = "admin")
-    public void testDeleteCinemaAsAdmin() {
-        long cinemaId = 1; // Replace with an existing cinema ID
-
-        given()
-                .pathParam("cinemaId", cinemaId)
-                .when()
-                .delete("http://localhost:8080/api/cinemas/{cinemaId}")
-                .then()
-                .statusCode(HttpStatus.OK.value());
-    }
-
-    @Test
-    @WithMockUser(roles = "user")
     public void testUpdateCinemaAsUser() {
-        long cinemaId = 1; // Replace with an existing cinema ID
+        long cinemaId = 1;
 
         CinemaDTO cinema = new CinemaDTO();
         cinema.setName("Updated Cinema");
@@ -126,19 +117,19 @@ public class CinemaControllerTest {
         cinema.setCapacity(150);
 
         given()
+                .auth().basic(USER_USERNAME, USER_PASSWORD)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(cinema)
                 .pathParam("cinemaId", cinemaId)
                 .when()
-                .put("http://localhost:8080/api/cinemas/{cinemaId}")
+                .put(BASE_URL + "/{cinemaId}")
                 .then()
                 .statusCode(HttpStatus.FORBIDDEN.value());
     }
 
     @Test
-    @WithMockUser(roles = "admin")
     public void testUpdateCinemaAsAdmin() {
-        long cinemaId = 1; // Replace with an existing cinema ID
+        long cinemaId = 1;
 
         CinemaDTO cinema = new CinemaDTO();
         cinema.setName("Updated Cinema");
@@ -146,71 +137,131 @@ public class CinemaControllerTest {
         cinema.setCapacity(150);
 
         given()
+                .auth().basic(ADMIN_USERNAME, ADMIN_PASSWORD)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(cinema)
                 .pathParam("cinemaId", cinemaId)
                 .when()
-                .put("http://localhost:8080/api/cinemas/{cinemaId}")
+                .put(BASE_URL + "/{cinemaId}")
                 .then()
                 .statusCode(HttpStatus.OK.value());
     }
 
     @Test
-    @WithMockUser(roles = "user")
+    public void testUpdateCinemaNotFound() {
+        long cinemaId = 999;
+
+        CinemaDTO cinema = new CinemaDTO();
+        cinema.setName("Updated Cinema");
+        cinema.setAddress("Updated address");
+        cinema.setCapacity(150);
+
+        given()
+                .auth().basic(ADMIN_USERNAME, ADMIN_PASSWORD)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(cinema)
+                .pathParam("cinemaId", cinemaId)
+                .when()
+                .put(BASE_URL + "/{cinemaId}")
+                .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    public void testDeleteCinemaAsUser() {
+        long cinemaId = 1;
+
+        given()
+                .auth().basic(USER_USERNAME, USER_PASSWORD)
+                .pathParam("cinemaId", cinemaId)
+                .when()
+                .delete(BASE_URL + "/{cinemaId}")
+                .then()
+                .statusCode(HttpStatus.FORBIDDEN.value());
+    }
+
+    @Test
+    public void testDeleteCinemaAsAdmin() {
+        long cinemaId = 1;
+
+        given()
+                .auth().basic(ADMIN_USERNAME, ADMIN_PASSWORD)
+                .pathParam("cinemaId", cinemaId)
+                .when()
+                .delete(BASE_URL + "/{cinemaId}")
+                .then()
+                .statusCode(HttpStatus.OK.value());
+    }
+
+    @Test
+    public void testDeleteCinemaNotFound() {
+        long cinemaId = 999;
+
+        given()
+                .auth().basic(ADMIN_USERNAME, ADMIN_PASSWORD)
+                .pathParam("cinemaId", cinemaId)
+                .when()
+                .delete(BASE_URL + "/{cinemaId}")
+                .then()
+                .statusCode(HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
     public void testAddMovieToCinemaAsUser() {
-        long cinemaId = 1; // Replace with an existing cinema ID
-        long movieId = 1; // Replace with an existing movie ID
+        long cinemaId = 1;
+        long movieId = 1;
 
         given()
+                .auth().basic(USER_USERNAME, USER_PASSWORD)
                 .pathParam("cinemaId", cinemaId)
                 .pathParam("movieId", movieId)
                 .when()
-                .put("http://localhost:8080/api/cinemas/{cinemaId}/movies/{movieId}")
+                .put(BASE_URL + "/{cinemaId}/movies/{movieId}")
                 .then()
                 .statusCode(HttpStatus.FORBIDDEN.value());
     }
 
     @Test
-    @WithMockUser(roles = "admin")
     public void testAddMovieToCinemaAsAdmin() {
-        long cinemaId = 1; // Replace with an existing cinema ID
-        long movieId = 1; // Replace with an existing movie ID
+        long cinemaId = 1;
+        long movieId = 1;
 
         given()
+                .auth().basic(ADMIN_USERNAME, ADMIN_PASSWORD)
                 .pathParam("cinemaId", cinemaId)
                 .pathParam("movieId", movieId)
                 .when()
-                .put("http://localhost:8080/api/cinemas/{cinemaId}/movies/{movieId}")
+                .put(BASE_URL + "/{cinemaId}/movies/{movieId}")
                 .then()
                 .statusCode(HttpStatus.OK.value());
     }
 
     @Test
-    @WithMockUser(roles = "user")
     public void testDeleteMovieFromCinemaAsUser() {
-        long cinemaId = 1; // Replace with an existing cinema ID
-        long movieId = 1; // Replace with an existing movie ID
+        long cinemaId = 1;
+        long movieId = 1;
 
         given()
+                .auth().basic(USER_USERNAME, USER_PASSWORD)
                 .pathParam("cinemaId", cinemaId)
                 .pathParam("movieId", movieId)
                 .when()
-                .delete("http://localhost:8080/api/cinemas/{cinemaId}/movies/{movieId}")
+                .delete(BASE_URL + "/{cinemaId}/movies/{movieId}")
                 .then()
                 .statusCode(HttpStatus.FORBIDDEN.value());
     }
 
     @Test
-    @WithMockUser(roles = "admin")
     public void testDeleteMovieFromCinemaAsAdmin() {
-        long cinemaId = 1; // Replace with an existing cinema ID
-        long movieId = 1; // Replace with an existing movie ID
+        long cinemaId = 1;
+        long movieId = 1;
 
         given()
+                .auth().basic(ADMIN_USERNAME, ADMIN_PASSWORD)
                 .pathParam("cinemaId", cinemaId)
                 .pathParam("movieId", movieId)
                 .when()
-                .delete("http://localhost:8080/api/cinemas/{cinemaId}/movies/{movieId}")
+                .delete(BASE_URL + "/{cinemaId}/movies/{movieId}")
                 .then()
                 .statusCode(HttpStatus.OK.value());
     }
