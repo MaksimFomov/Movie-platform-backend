@@ -1,5 +1,9 @@
 package com.fomov.movieplatform.config;
 
+import com.fomov.movieplatform.security.CustomUserDetailsService;
+import com.fomov.movieplatform.security.JwtAuthenticationFilter;
+import com.fomov.movieplatform.security.JwtAuthorizationFilter;
+import com.fomov.movieplatform.security.JwtTokenUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,8 +24,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
-    public SecurityConfig(UserDetailsService userDetailsService) {
+    private final JwtTokenUtil jwtTokenUtil;
+    private final CustomUserDetailsService customUserDetailsService;
+
+
+    public SecurityConfig(UserDetailsService userDetailsService, JwtTokenUtil jwtTokenUtil, CustomUserDetailsService customUserDetailsService) {
         this.userDetailsService = userDetailsService;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     @Override
@@ -42,8 +52,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE, "/api/**").hasRole("admin")
                 .anyRequest().authenticated()
                 .and()
+                .addFilter(new JwtAuthenticationFilter(authenticationManager(), jwtTokenUtil))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), jwtTokenUtil, customUserDetailsService))
                 .httpBasic();
     }
+
 
     @Bean
     @Override
