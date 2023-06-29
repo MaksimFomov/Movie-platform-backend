@@ -9,7 +9,7 @@ import static io.restassured.RestAssured.given;
 
 public class CinemaControllerTest {
     private static final String BASE_URL = "http://localhost:8080/api/cinemas";
-    private static final String USER_USERNAME = "user1";
+    private static final String USER_USERNAME = "user";
     private static final String USER_PASSWORD = "user";
     private static final String ADMIN_USERNAME = "admin";
     private static final String ADMIN_PASSWORD = "admin";
